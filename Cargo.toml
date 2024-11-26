@@ -1,0 +1,13 @@
+[package]
+name = "advent-of-code-2024"
+version = "0.1.0"
+edition = "2021"
+authors = ["Benjamin Chandler <benjamin.chandler@hotmail.com>"]
+description = "Package containing solution and benchmarking for Advent of Code 2024"
+
+[dependencies]
+criterion = "0.5.1"
+
+[[bench]]
+name = "benchmark_aoc"
+harness = false
