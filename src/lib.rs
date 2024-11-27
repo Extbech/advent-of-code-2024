@@ -34,17 +34,29 @@ pub trait Solution<T, G> {
     }
 }
 
+/// Solution for Day One
 pub struct DayOne {
-    day: u8,
+    data: Vec<String>,
+}
+
+/// Solution for Day Two
+pub struct DayTwo {
+    data: Vec<String>,
+}
+
+/// Solution for Day Three
+pub struct DayThree {
+    data: Vec<String>,
+}
+
+/// Solution for Day Four
+pub struct DayFour {
     data: Vec<String>,
 }
 
 impl Solution<i32, i32> for DayOne {
     fn new() -> Self {
-        DayOne {
-            day: 1,
-            data: Self::read_data_to_vec(1).unwrap(),
-        }
+        DayOne { data: Self::read_data_to_vec(1).unwrap() }
     }
     fn part_one(&self) -> i32 {
         self.data.iter().map(|x| x.parse::<i32>().unwrap()).filter(|f| f % 2 == 0).sum()
@@ -55,8 +67,6 @@ impl Solution<i32, i32> for DayOne {
     }
 
     fn solve(&self) {
-        let part_one = self.part_one();
-        let part_two = self.part_two();
-        println!("Day {}\nSolution part one: {}\nSolution part two: {}\n", self.day, part_one, part_two);
+        println!("Day 1\nSolution part one: {}\nSolution part two: {}\n", self.part_one(), self.part_two());
     }
 }

@@ -1,4 +1,4 @@
-use advent_of_code_2024::{Solution, DayOne};
+use advent_of_code_2024::*;
 use std::env;
 
 fn main() {
