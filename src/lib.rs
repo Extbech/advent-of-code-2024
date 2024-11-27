@@ -1,7 +1,7 @@
 use std::{fs, io::Error};
 
 /// The Solution trait is used to define the interface for each day's solution.
-pub trait Solution<T: std::fmt::Display, G:std::fmt::Display> {
+pub trait Solution<T: std::fmt::Display, G: std::fmt::Display> {
     /// Implement this function to create a new instance of the solution.
     fn new() -> Self;
 
