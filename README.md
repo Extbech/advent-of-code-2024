@@ -1,4 +1,4 @@
-# Rust Advent of Code 2024 Solution
+# Rust Advent of Code 2024 Solution 🦀
 A Rust implementation for solving the 2024 advent of code problems.
 
 ## How to run
