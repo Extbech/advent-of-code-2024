@@ -27,17 +27,17 @@ pub trait Solution<T: std::fmt::Display, G: std::fmt::Display> {
     /// Implement this function to solve part two of the problem.
     fn part_two(&self) -> G;
 
-    /// Implement this function to solve both parts of the problem and print the results.
+    /// This function runs part one and two and prints the result for the day.
     fn solve(&self) { println!("Day {}\nPart one: {}\nPart two: {}\n", self.get_day(), self.part_one(), self.part_two()); }
 }
 
 /// Solution for Day One
-pub struct DayOne {
+pub struct DayOneSolution {
     data: Vec<String>,
 }
 
-impl Solution<i32, i32> for DayOne {
-    fn new() -> Self { DayOne { data: Self::read_data_to_vec(1).unwrap() } }
+impl Solution<i32, i32> for DayOneSolution {
+    fn new() -> Self { DayOneSolution { data: Self::read_data_to_vec(1).unwrap() } }
     
     fn get_day(&self) -> u8 { 1 }
 

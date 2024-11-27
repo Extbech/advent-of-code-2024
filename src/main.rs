@@ -11,7 +11,7 @@ fn parse_input(args: Vec<String>) {
         1 => println!("Running all days ..."),
         2 => match args[1].as_str() {
             "1" | "one" => {
-                let day_one = DayOne::new();
+                let day_one = DayOneSolution::new();
                 day_one.solve();
             },
             _x => println!("Day {_x} not found or implemented"),
