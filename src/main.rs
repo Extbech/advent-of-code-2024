@@ -14,7 +14,7 @@ fn parse_input(args: Vec<String>) {
                 let day_one = DayOneSolution::new();
                 day_one.solve();
             },
-            _x => println!("Day {_x} not found or implemented"),
+            _x => println!("Day <{_x}> not found or implemented"),
         },
         _ => println!("Invalid Input. Too many number of arguments"),
     }
