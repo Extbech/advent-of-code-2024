@@ -1,7 +1,7 @@
 use std::{fs, io::Error};
 
 /// The Solution trait is used to define the interface for each day's solution.
-pub trait Solution<T, G> {
+pub trait Solution<T: std::fmt::Display, G:std::fmt::Display> {
     /// Implement this function to create a new instance of the solution.
     fn new() -> Self;
 
@@ -19,24 +19,31 @@ pub trait Solution<T, G> {
     }
 
     /// Implement this function to solve part one of the problem.
-    fn part_one(&self) -> T {
-        unimplemented!()
-    }
+    fn part_one(&self) -> T;
     
     /// Implement this function to solve part two of the problem.
-    fn part_two(&self) -> G {
-        unimplemented!()
-    }
+    fn part_two(&self) -> G;
 
     /// Implement this function to solve both parts of the problem and print the results.
-    fn solve(&self) {
-        unimplemented!()
-    }
+    fn solve(&self) { println!("Part one: {}\nPart two: {}\n", self.part_one(), self.part_two()); }
 }
 
 /// Solution for Day One
 pub struct DayOne {
     data: Vec<String>,
+}
+
+impl Solution<i32, i32> for DayOne {
+    fn new() -> Self {
+        DayOne { data: Self::read_data_to_vec(1).unwrap() }
+    }
+    fn part_one(&self) -> i32 {
+        self.data.iter().map(|x| x.parse::<i32>().unwrap()).filter(|f| f % 2 == 0).sum()
+    }
+
+    fn part_two(&self) -> i32 {
+        self.data.iter().map(|x| x.parse::<i32>().unwrap()).filter(|f| f % 2 != 0).sum()
+    }
 }
 
 /// Solution for Day Two
@@ -52,21 +59,4 @@ pub struct DayThree {
 /// Solution for Day Four
 pub struct DayFour {
     data: Vec<String>,
-}
-
-impl Solution<i32, i32> for DayOne {
-    fn new() -> Self {
-        DayOne { data: Self::read_data_to_vec(1).unwrap() }
-    }
-    fn part_one(&self) -> i32 {
-        self.data.iter().map(|x| x.parse::<i32>().unwrap()).filter(|f| f % 2 == 0).sum()
-    }
-
-    fn part_two(&self) -> i32 {
-        self.data.iter().map(|x| x.parse::<i32>().unwrap()).filter(|f| f % 2 != 0).sum()
-    }
-
-    fn solve(&self) {
-        println!("Day 1\nSolution part one: {}\nSolution part two: {}\n", self.part_one(), self.part_two());
-    }
 }
