@@ -1,6 +1,5 @@
 use crate::Solution;
 
-/// Solution for Day One
 pub struct DayOneSolution {
     data: Vec<String>,
 }
