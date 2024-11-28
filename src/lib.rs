@@ -1,10 +1,40 @@
-#![allow(refining_impl_trait)]
+#![allow(refining_impl_trait, dead_code)]
 pub mod implementation;
 
 use std::{fs, io::Error};
 use crate::implementation::*;
 
-/// The Solution trait is used to define the interface for each day's solution.
+/// The `Solution` trait defines the interface required for implementing the solution to a day's challenge in Advent of Code.
+///
+/// # Examples
+///
+/// ```
+/// struct MyDaySolution {
+///    data: Vec<String>,
+/// }
+///
+/// impl Solution for MyDaySolution {
+///     const DAY: u8 = 1;
+///
+///     fn new() -> Self {
+///         MyDaySolution {
+///             data: Self::read_data_to_vec().unwrap(),        
+///         }
+///     }
+///
+///     fn part_one(&self) -> i32 {
+///         // Solution to part one
+///         self.data.iter().map(|x| x.parse::<i32>().unwrap()).sum()
+///     }
+///
+///     fn part_two(&self) -> f32 {
+///         // Solution to part two
+///         self.data.iter().map(|x| x.parse::<f32>().unwrap()).sum()
+///     }
+/// }
+///
+/// let solution = MyDaySolution::new().solve();
+/// ```
 pub trait Solution {
 
     // Constant determining if the solution is to be used as example.
@@ -46,7 +76,18 @@ pub trait Solution {
     }
 }
 
+/// `AdventOfCodeSolver` is responsible for managing and executing solutions for each day.
+///
+/// # Examples
+///
+/// ```
+/// # use crate::your_crate_name::AdventOfCodeSolver;
+/// let solver = AdventOfCodeSolver::new();
+/// solver.solve(vec!["path_to_executable".to_string(), "1".to_string()]);
+/// // This will execute the solution for day 1
+/// ```
 pub struct AdventOfCodeSolver<'a> {
+    /// A slice of function pointers to the solutions for each day.
     solutions: &'a [fn() -> ()],
 }
 
@@ -82,6 +123,7 @@ impl<'a> AdventOfCodeSolver<'a> {
         }
     }
 
+    /// This function is used to execute the solution for a specific day or all days depending on args provided.
     pub fn solve(&self, args: Vec<String>) {
         match args.len() {
             1 => {

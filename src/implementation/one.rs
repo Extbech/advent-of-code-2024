@@ -9,9 +9,7 @@ impl Solution for DayOneSolution {
     const DAY: u8 = 1;
 
     fn new() -> Self {
-        DayOneSolution {
-            data: Self::read_data_to_vec().unwrap(),
-        }
+        todo!()
     }
 
     fn part_one(&self) -> ! {
