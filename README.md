@@ -21,6 +21,9 @@ If you however want to only run a solution for a specific day you can provide th
 ```bash
 cargo run -- <day>
 ```
+Valid CLI args are:
+- `1 | one` for running a specific day
+- `ex | example` for running the example
 
 Additionally you can add the `--release` flag to run in release mode to decrease execution time.
 
