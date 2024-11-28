@@ -9,12 +9,16 @@ use crate::implementation::*;
 /// # Examples
 ///
 /// ```
+/// #[allow(refining_impl_trait)]
+/// use advent_of_code_2024::Solution;
+/// 
 /// struct MyDaySolution {
 ///    data: Vec<String>,
 /// }
 ///
 /// impl Solution for MyDaySolution {
-///     const DAY: u8 = 1;
+///     const DAY: u8 = 0;
+///     const EXAMPLE: bool = true;
 ///
 ///     fn new() -> Self {
 ///         MyDaySolution {
@@ -23,12 +27,10 @@ use crate::implementation::*;
 ///     }
 ///
 ///     fn part_one(&self) -> i32 {
-///         // Solution to part one
 ///         self.data.iter().map(|x| x.parse::<i32>().unwrap()).sum()
 ///     }
 ///
 ///     fn part_two(&self) -> f32 {
-///         // Solution to part two
 ///         self.data.iter().map(|x| x.parse::<f32>().unwrap()).sum()
 ///     }
 /// }
@@ -81,10 +83,11 @@ pub trait Solution {
 /// # Examples
 ///
 /// ```
-/// # use crate::your_crate_name::AdventOfCodeSolver;
+/// use advent_of_code_2024::AdventOfCodeSolver;
+/// 
 /// let solver = AdventOfCodeSolver::new();
-/// solver.solve(vec!["path_to_executable".to_string(), "1".to_string()]);
-/// // This will execute the solution for day 1
+/// solver.solve(vec!["path_to_executable".to_string(), "ex".to_string()]);
+/// // This will execute the example solution
 /// ```
 pub struct AdventOfCodeSolver<'a> {
     /// A slice of function pointers to the solutions for each day.
