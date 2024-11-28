@@ -21,9 +21,18 @@ If you however want to only run a solution for a specific day you can provide th
 ```bash
 cargo run -- <day>
 ```
+Valid CLI args are:
+- `1 | one` for running a specific day
+- `ex | example` for running the example
 
 Additionally you can add the `--release` flag to run in release mode to decrease execution time.
 
+## Testing
+Tests can be implemented for each solution and can be run by the command:
+
+```bash
+cargo test
+```
 ## Benchmarking
 The repo includes benchmarking for all the solutions and can be run by the following command:
 
