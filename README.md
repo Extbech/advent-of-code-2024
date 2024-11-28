@@ -1,7 +1,7 @@
 # Rust Advent of Code 2024 Solution 🦀
 A Rust implementation for solving the 2024 advent of code problems. This solution also includes benchmarking for all the problems.
 
-## How to run ✍️
+## How to run ⚙️
 
 Clone the repository and cd into it by running:
 
