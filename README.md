@@ -1,7 +1,7 @@
 # Rust Advent of Code 2024 Solution 🦀
 A Rust implementation for solving the 2024 advent of code problems. This solution also includes benchmarking for all the problems.
 
-## How to run
+## How to run ✍️
 
 Clone the repository and cd into it by running:
 
@@ -27,13 +27,13 @@ Valid CLI args are:
 
 Additionally you can add the `--release` flag to run in release mode to decrease execution time.
 
-## Testing
+## Testing 🧪
 Tests can be implemented for each solution and can be run by the command:
 
 ```bash
 cargo test
 ```
-## Benchmarking
+## Benchmarking 💪
 The repo includes benchmarking for all the solutions and can be run by the following command:
 
 ```bash
