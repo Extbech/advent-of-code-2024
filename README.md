@@ -27,6 +27,12 @@ Valid CLI args are:
 
 Additionally you can add the `--release` flag to run in release mode to decrease execution time.
 
+## Testing
+Tests can be implemented for each solution and can be run by the command:
+
+```bash
+cargo test
+```
 ## Benchmarking
 The repo includes benchmarking for all the solutions and can be run by the following command:
 
