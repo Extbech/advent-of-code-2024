@@ -1,4 +1,4 @@
-# Rust Advent of Code 2024 Solutions 🦀
+# Rust Advent of Code 2024 Solution 🦀
 
 Welcome to the Rust-based solutions for the Advent of Code 2024! This repository contains efficient and idiomatic Rust code to tackle the intriguing puzzles presented during the event. Additionally, we provide benchmarking tools to measure and optimize the performance of each solution.
 
