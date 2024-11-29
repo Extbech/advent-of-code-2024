@@ -38,6 +38,7 @@ Valid CLI arguments include:
 
 -  `1 | one` to run the solution for Day 1.
 -  `ex | example` to run the example solution.
+
 For optimized performance, append the `--release` flag to run the solutions in release mode:
 
 ```bash
