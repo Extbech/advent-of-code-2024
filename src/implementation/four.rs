@@ -8,14 +8,14 @@ impl Solution for DayFourSolution {
     const DAY: u8 = 4;
 
     fn new() -> Self {
-        todo!()
+        todo!("Implement new function for DayFourSolution")
     }
 
     fn part_one(&self) -> ! {
-        todo!()
+        todo!("Implement part_one function for DayFourSolution")
     }
 
     fn part_two(&self) -> ! {
-        todo!()
+        todo!("Implement part_two function for DayFourSolution")
     }
 }
