@@ -50,7 +50,7 @@ cargo run --release -- <day>
 This project is structured to help you focus on solving the puzzles. Each day's challenge has a corresponding skeleton structure that requires implementing the following methods:
 
 ```rust
-fn new () -> Self;
+fn new() -> Self;
 
 fn part_one(&self) -> impl std::fmt::Display;
 
