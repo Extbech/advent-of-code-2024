@@ -6,10 +6,9 @@ pub struct ExampleSolution {
 }
 
 impl Solution for ExampleSolution {
-    
     // This const does not matter as it is not used for this example implementation.
     const DAY: u8 = 0;
-    
+
     // This const is used to determine if the solution is an example solution.
     const EXAMPLE: bool = true;
 
@@ -38,9 +37,7 @@ impl Solution for ExampleSolution {
             .filter(|f| f % 2 != 0)
             .sum::<i32>()
     }
-    
 }
-
 
 #[cfg(test)]
 mod tests {
