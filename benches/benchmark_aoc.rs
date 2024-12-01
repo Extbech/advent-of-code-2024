@@ -1,4 +1,5 @@
-use advent_of_code_2024::{DayOneSolution, Solution};
+use advent_of_code_2024::{implementation::one::DayOneSolution, Solution};
+
 use criterion::{criterion_group, criterion_main, Criterion};
 
 fn benchmark_aoc_day_one(c: &mut Criterion) {
