@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use crate::Solution;
 
 pub struct DayOneSolution {
@@ -22,7 +20,7 @@ impl Solution for DayOneSolution {
         // Quantum looping
         right_list
             .into_iter()
-            .zip(left_list.into_iter())
+            .zip(left_list)
             .map(|(r, l)| r.abs_diff(l))
             .sum()
     }
@@ -37,13 +35,13 @@ impl Solution for DayOneSolution {
         // Thing goes BRRRT
         'outer: loop {
             while left_list.get(idx_l) < right_list.get(idx_r) {
-                if left_list.get(idx_l) == None {
+                if left_list.get(idx_l).is_none() {
                     break 'outer;
                 }
                 idx_l += 1;
             }
             while right_list.get(idx_r) < left_list.get(idx_l) {
-                if right_list.get(idx_r) == None {
+                if right_list.get(idx_r).is_none() {
                     break 'outer;
                 }
                 idx_r += 1;
@@ -69,7 +67,7 @@ impl Solution for DayOneSolution {
     }
 }
 
-fn parse_input(input: &Vec<String>) -> (Vec<u32>, Vec<u32>) {
+fn parse_input(input: &[String]) -> (Vec<u32>, Vec<u32>) {
     input
         .iter()
         .map(|l| {

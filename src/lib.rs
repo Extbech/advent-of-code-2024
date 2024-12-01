@@ -1,8 +1,8 @@
 #![allow(refining_impl_trait, dead_code)]
 pub mod implementation;
 
-use std::{fs, io::Error};
 use crate::implementation::*;
+use std::{fs, io::Error};
 
 /// The `Solution` trait defines the interface required for implementing the solution to a day's challenge in Advent of Code.
 ///
@@ -11,7 +11,7 @@ use crate::implementation::*;
 /// ```
 /// #[allow(refining_impl_trait)]
 /// use advent_of_code_2024::Solution;
-/// 
+///
 /// struct MyDaySolution {
 ///    data: Vec<String>,
 /// }
@@ -38,7 +38,6 @@ use crate::implementation::*;
 /// let solution = MyDaySolution::new().solve();
 /// ```
 pub trait Solution {
-
     // Constant determining if the solution is to be used as example.
     const EXAMPLE: bool = false;
 
@@ -49,13 +48,24 @@ pub trait Solution {
     fn new() -> Self;
 
     // Function for getting file path based on AOC day and whether it is an example solution or not.
-    fn get_file_path() -> String { if Self::EXAMPLE { "data/example.txt".to_string() } else { format!("data/day_{}.txt", Self::DAY) } }
+    fn get_file_path() -> String {
+        if Self::EXAMPLE {
+            "data/example.txt".to_string()
+        } else {
+            format!("data/day_{}.txt", Self::DAY)
+        }
+    }
 
     /// This function is used to read the data from the file and return it as a string.
-    fn read_data_to_string() -> Result<String, Error> { fs::read_to_string(Self::get_file_path()) }
+    fn read_data_to_string() -> Result<String, Error> {
+        fs::read_to_string(Self::get_file_path())
+    }
 
     /// This function is used to read the data from the file and return it as a vector of strings.
-    fn read_data_to_vec() -> Result<Vec<String>, Error> { fs::read_to_string(Self::get_file_path()).map(|data| data.lines().map(|line| line.to_string()).collect()) }
+    fn read_data_to_vec() -> Result<Vec<String>, Error> {
+        fs::read_to_string(Self::get_file_path())
+            .map(|data| data.lines().map(|line| line.to_string()).collect())
+    }
 
     /// Implement this function to solve part one of the problem.
     fn part_one(&self) -> impl std::fmt::Display;
@@ -66,7 +76,11 @@ pub trait Solution {
     /// This function runs part one and two and prints the result for the day.
     fn solve(&self) {
         if Self::EXAMPLE {
-            println!("\nExample Solution\nPart one solution: {}\nPart two solution: {}", self.part_one(), self.part_two());
+            println!(
+                "\nExample Solution\nPart one solution: {}\nPart two solution: {}",
+                self.part_one(),
+                self.part_two()
+            );
         } else {
             println!(
                 "\nDay {}\nPart one solution: {}\nPart two solution: {}",
@@ -84,7 +98,7 @@ pub trait Solution {
 ///
 /// ```
 /// use advent_of_code_2024::AdventOfCodeSolver;
-/// 
+///
 /// let solver = AdventOfCodeSolver::new();
 /// solver.solve(vec!["path_to_executable".to_string(), "ex".to_string()]);
 /// // This will execute the example solution
@@ -132,7 +146,7 @@ impl<'a> AdventOfCodeSolver<'a> {
             1 => {
                 println!("\nExecuting all solutions...");
                 self.solutions.iter().for_each(|s| s())
-            },
+            }
             2 => match args[1].as_str() {
                 "1" | "one" => self.solutions[0](),
                 "2" | "two" => self.solutions[1](),
@@ -163,5 +177,11 @@ impl<'a> AdventOfCodeSolver<'a> {
             },
             _ => println!("Invalid Input. Too many number of arguments"),
         }
+    }
+}
+
+impl<'a> Default for AdventOfCodeSolver<'a> {
+    fn default() -> Self {
+        Self::new()
     }
 }
