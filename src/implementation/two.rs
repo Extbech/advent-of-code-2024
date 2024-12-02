@@ -1,5 +1,3 @@
-use std::cell::Ref;
-
 use crate::Solution;
 
 pub struct DayTwoSolution {
