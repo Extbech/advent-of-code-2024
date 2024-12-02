@@ -1,3 +1,5 @@
+use std::cell::Ref;
+
 use crate::Solution;
 
 pub struct DayTwoSolution {
@@ -16,7 +18,7 @@ impl Solution for DayTwoSolution {
     fn part_one(&self) -> usize {
         self.data
             .iter()
-            .filter(|report| report_is_safe(report))
+            .filter(|report| report_is_safe(report.iter()))
             .count()
     }
 
@@ -34,10 +36,10 @@ fn parse_input(data: &[String]) -> Vec<Vec<u32>> {
         .collect()
 }
 
-fn report_is_safe(report: &[u32]) -> bool {
+fn report_is_safe<'a>(report: impl Iterator<Item = &'a u32> + Clone) -> bool {
     let mut decreasing = false;
     let mut increasing = false;
-    !report.iter().zip(report.iter().skip(1)).any(|(a, b)| {
+    !report.clone().zip(report.skip(1)).any(|(a, b)| {
         if a.abs_diff(*b) >= 1 && a.abs_diff(*b) <= 3 {
             if a > b {
                 decreasing = true;
@@ -53,18 +55,11 @@ fn report_is_safe(report: &[u32]) -> bool {
 }
 
 fn report_is_safe_with_one_removal(report: &[u32]) -> bool {
-    let res = report_is_safe(report);
+    let res = report_is_safe(report.iter());
     if res {
         return true;
     }
     (0..report.len())
-        .map(|i| {
-            report
-                .iter()
-                .enumerate()
-                .filter(|(idx, _)| *idx != i)
-                .map(|(_, val)| *val)
-                .collect::<Vec<u32>>()
-        })
-        .any(|slice| report_is_safe(&slice))
+        .map(|i| report.iter().enumerate().filter(move |(idx, _)| *idx != i))
+        .any(|slice| report_is_safe(slice.map(|(_, b)| b)))
 }
