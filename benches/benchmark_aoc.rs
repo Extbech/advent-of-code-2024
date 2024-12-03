@@ -1,5 +1,5 @@
 use advent_of_code_2024::{
-    implementation::{one::DayOneSolution, two::DayTwoSolution},
+    implementation::{one::DayOneSolution, three::DayThreeSolution, two::DayTwoSolution},
     Solution,
 };
 
@@ -23,5 +23,14 @@ fn benchmark_aoc_day_two(c: &mut Criterion) {
     group.finish();
 }
 
-criterion_group!(benches, benchmark_aoc_day_one, benchmark_aoc_day_two);
+fn benchmark_aoc_day_three(c: &mut Criterion) {
+    let day_three = DayThreeSolution::new();
+    let mut group = c.benchmark_group("AOC day 3");
+
+    group.bench_function("Solution one", |b| b.iter(|| day_three.part_one()));
+    group.bench_function("Solution two", |b| b.iter(|| day_three.part_two()));
+    group.finish();
+}
+
+criterion_group!(benches, benchmark_aoc_day_one, benchmark_aoc_day_two, benchmark_aoc_day_three);
 criterion_main!(benches);

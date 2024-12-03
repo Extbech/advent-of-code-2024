@@ -7,6 +7,7 @@ description = "Package containing solution and benchmarking for Advent of Code 2
 
 [dependencies]
 criterion = "0.5.1"
+regex = "1.11.1"
 
 [[bench]]
 name = "benchmark_aoc"

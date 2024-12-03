@@ -83,7 +83,7 @@ pub trait Solution {
             );
         } else {
             println!(
-                "\nDay {}\nPart one solution: {}\nPart two solution: {}",
+                "Day {}\nPart one solution: {}\nPart two solution: {}\n",
                 Self::DAY,
                 self.part_one(),
                 self.part_two()
@@ -144,7 +144,7 @@ impl<'a> AdventOfCodeSolver<'a> {
     pub fn solve(&self, args: Vec<String>) {
         match args.len() {
             1 => {
-                println!("\nExecuting all solutions...");
+                println!("\nExecuting all solutions...\n");
                 self.solutions.iter().for_each(|s| s())
             }
             2 => match args[1].as_str() {
