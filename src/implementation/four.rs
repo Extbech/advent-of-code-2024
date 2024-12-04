@@ -50,14 +50,12 @@ fn check_x_direction(row: &[u8], x: usize) -> u16 {
     let mut count = 0;
     // CHECK LEFT
     if x as i16 - PATTERN.len() as i16 + 1 >= 0
-        && (1..PATTERN.len()).all(|i| &row[x - i] == PATTERN.iter().nth(i).unwrap())
+        && (1..PATTERN.len()).all(|i| row[x - i] == PATTERN[i])
     {
         count += 1;
     }
     // CHECK RIGHT
-    if x + PATTERN.len() - 1 < row.len()
-        && (1..PATTERN.len()).all(|i| &row[x + i] == PATTERN.iter().nth(i).unwrap())
-    {
+    if x + PATTERN.len() - 1 < row.len() && (1..PATTERN.len()).all(|i| row[x + i] == PATTERN[i]) {
         count += 1;
     }
     count
@@ -67,13 +65,13 @@ fn check_y_direction(grid: &[Vec<u8>], y: usize, x: usize) -> u16 {
     let mut count = 0;
     // CHECK UPWARDS
     if y as i16 - PATTERN.len() as i16 + 1 >= 0
-        && (1..PATTERN.len()).all(|i| &grid[y - i][x] == PATTERN.iter().nth(i).unwrap())
+        && (1..PATTERN.len()).all(|i| grid[y - i][x] == PATTERN[i])
     {
         count += 1;
     }
     // CHECK DOWNWARDS
-    if y + PATTERN.iter().count() - 1 < grid[y].len()
-        && (1..PATTERN.len()).all(|i| &grid[y + i][x] == PATTERN.iter().nth(i).unwrap())
+    if y + PATTERN.len() - 1 < grid[y].len()
+        && (1..PATTERN.len()).all(|i| grid[y + i][x] == PATTERN[i])
     {
         count += 1;
     }
@@ -85,13 +83,13 @@ fn check_diag(grid: &[Vec<u8>], x: usize, y: usize) -> u16 {
     if y as i16 - PATTERN.len() as i16 + 1 >= 0 {
         // TOP LEFT
         if x as i16 - PATTERN.len() as i16 + 1 >= 0
-            && (1..PATTERN.len()).all(|i| &grid[y - i][x - i] == PATTERN.iter().nth(i).unwrap())
+            && (1..PATTERN.len()).all(|i| grid[y - i][x - i] == PATTERN[i])
         {
             count += 1;
         }
         // TOP RIGHT
         if x + PATTERN.len() - 1 < grid[y].len()
-            && (1..PATTERN.len()).all(|i| &grid[y - i][x + i] == PATTERN.iter().nth(i).unwrap())
+            && (1..PATTERN.len()).all(|i| grid[y - i][x + i] == PATTERN[i])
         {
             count += 1;
         }
@@ -99,13 +97,13 @@ fn check_diag(grid: &[Vec<u8>], x: usize, y: usize) -> u16 {
     if y + PATTERN.len() - 1 < grid.len() {
         // BOTTOM LEFT
         if x as i16 - PATTERN.len() as i16 + 1 >= 0
-            && (1..PATTERN.len()).all(|i| &grid[y + i][x - i] == PATTERN.iter().nth(i).unwrap())
+            && (1..PATTERN.len()).all(|i| grid[y + i][x - i] == PATTERN[i])
         {
             count += 1;
         }
         // BOTTOM RIGHT
         if x + PATTERN.len() - 1 < grid[y].len()
-            && (1..PATTERN.len()).all(|i| &grid[y + i][x + i] == PATTERN.iter().nth(i).unwrap())
+            && (1..PATTERN.len()).all(|i| grid[y + i][x + i] == PATTERN[i])
         {
             count += 1;
         }
