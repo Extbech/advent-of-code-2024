@@ -81,7 +81,7 @@ Benchmarking results are located in the `target/criterion` directory of the repo
 
 ### Benchmark Results
 
-| Day |                                         Solved                                          |        Part 1 runtime        |   Solution Part 2 runtime   |
+| Day |                                         Solved                                          |        Part 1 runtime        |       Part 2 runtime        |
 | :-: | :-------------------------------------------------------------------------------------: | :--------------------------: | :-------------------------: |
 |  1  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> | $${\color{green}87.49 μs}$$  | $${\color{green}89.73 μs}$$ |
 |  2  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> |  $${\color{green}1.84 μs}$$  | $${\color{green}4.52 μs}$$  |

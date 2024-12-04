@@ -10,7 +10,7 @@ fn main() {
         "Day".to_string(),
         "Solved".to_string(),
         "Part 1 runtime".to_string(),
-        "Solution Part 2 runtime".to_string(),
+        "Part 2 runtime".to_string(),
     ]);
 
     for day in 1..=25 {
