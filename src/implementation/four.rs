@@ -1,7 +1,6 @@
 use crate::Solution;
 
 const PATTERN: &str = "XMAS";
-const PATTERN_TWO: &str = "MAS";
 
 pub struct DayFourSolution {
     data: Vec<Vec<char>>,
@@ -21,10 +20,8 @@ impl Solution for DayFourSolution {
         for y in 0..self.data.len() {
             for x in 0..self.data[y].len() {
                 if self.data[y][x] == 'X' {
-                    let row = &self.data[y];
-                    let col = &self.data.iter().map(|a| a[x]).collect::<Vec<char>>();
-                    count += check_x_direction(row, x);
-                    count += check_y_direction(col, y);
+                    count += check_x_direction(&self.data[y], x);
+                    count += check_y_direction(&self.data, y, x);
                     count += check_diag(&self.data, x, y)
                 }
             }
@@ -34,8 +31,8 @@ impl Solution for DayFourSolution {
 
     fn part_two(&self) -> u16 {
         let mut count = 0;
-        for y in 0..self.data.len() {
-            for x in 0..self.data[y].len() {
+        for y in 1..self.data.len() - 1 {
+            for x in 1..self.data[y].len() - 1 {
                 if self.data[y][x] == 'A' && check_diag_two(&self.data, x, y) {
                     count += 1;
                 }
@@ -51,11 +48,13 @@ fn parse_input(input: Vec<String>) -> Vec<Vec<char>> {
 
 fn check_x_direction(row: &[char], x: usize) -> u16 {
     let mut count = 0;
+    // CHECK LEFT
     if x as i16 - PATTERN.len() as i16 + 1 >= 0
         && (1..PATTERN.len()).all(|i| row[x - i] == PATTERN.chars().nth(i).unwrap())
     {
         count += 1;
     }
+    // CHECK RIGHT
     if x + PATTERN.len() - 1 < row.len()
         && (1..PATTERN.len()).all(|i| row[x + i] == PATTERN.chars().nth(i).unwrap())
     {
@@ -64,15 +63,17 @@ fn check_x_direction(row: &[char], x: usize) -> u16 {
     count
 }
 
-fn check_y_direction(col: &[char], y: usize) -> u16 {
+fn check_y_direction(grid: &[Vec<char>], y: usize, x: usize) -> u16 {
     let mut count = 0;
+    // CHECK UPWARDS
     if y as i16 - PATTERN.len() as i16 + 1 >= 0
-        && (1..PATTERN.len()).all(|i| col[y - i] == PATTERN.chars().nth(i).unwrap())
+        && (1..PATTERN.len()).all(|i| grid[y - i][x] == PATTERN.chars().nth(i).unwrap())
     {
         count += 1;
     }
-    if y + PATTERN.chars().count() - 1 < col.len()
-        && (1..PATTERN.len()).all(|i| col[y + i] == PATTERN.chars().nth(i).unwrap())
+    // CHECK DOWNWARDS
+    if y + PATTERN.chars().count() - 1 < grid[y].len()
+        && (1..PATTERN.len()).all(|i| grid[y + i][x] == PATTERN.chars().nth(i).unwrap())
     {
         count += 1;
     }
@@ -114,15 +115,14 @@ fn check_diag(grid: &[Vec<char>], x: usize, y: usize) -> u16 {
 
 fn check_diag_two(grid: &[Vec<char>], x: usize, y: usize) -> bool {
     if x as i16 > 0 && x + 1 < grid[y].len() && y as i16 > 0 && y + 1 < grid.len() {
-        return check_mas(vec![grid[y - 1][x - 1], grid[y][x], grid[y + 1][x + 1]])
-            && check_mas(vec![grid[y - 1][x + 1], grid[y][x], grid[y + 1][x - 1]]);
+        return check_mas(grid[y - 1][x - 1], grid[y][x], grid[y + 1][x + 1])
+            && check_mas(grid[y - 1][x + 1], grid[y][x], grid[y + 1][x - 1]);
     }
     false
 }
-fn check_mas(line: Vec<char>) -> bool {
-    (0..PATTERN_TWO.len()).all(|i| line[i] == PATTERN_TWO.chars().nth(i).unwrap())
-        || (0..PATTERN_TWO.len())
-            .all(|i| line[line.len() - 1 - i] == PATTERN_TWO.chars().nth(i).unwrap())
+
+fn check_mas(m: char, a: char, s: char) -> bool {
+    (m == 'M' && a == 'A' && s == 'S') || (m == 'S' && a == 'A' && s == 'M')
 }
 
 #[cfg(test)]
@@ -168,7 +168,7 @@ mod tests {
 
     #[test]
     fn test_helper() {
-        assert!(check_mas(vec!['M', 'A', 'S']));
-        assert!(check_mas(vec!['S', 'A', 'M']));
+        assert!(check_mas('M', 'A', 'S'));
+        assert!(check_mas('S', 'A', 'M'));
     }
 }
