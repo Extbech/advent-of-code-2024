@@ -71,7 +71,7 @@ cargo test
 Performance matters! This repository includes benchmarks for all solutions. To run the benchmarks and generate reports:
 
 ```bash
-cargo bench
+sh ./bench.sh
 ```
 
 Benchmarking results are located in the `target/criterion` directory of the repository.
