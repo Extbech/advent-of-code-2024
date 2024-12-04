@@ -20,14 +20,9 @@ fn main() {
         let part1_time = colorize_benchmark(&read_benchmark(&part1_path));
         let part2_time = colorize_benchmark(&read_benchmark(&part2_path));
 
-        let rust_icon = "<img src=\"https://www.rust-lang.org/logos/rust-logo-32x32.png\" alt=\"Rust\" width=\"20\" />";
+        let solved = get_solved(&part1_time, &part2_time);
 
-        rows.push(vec![
-            day.to_string(),
-            rust_icon.to_string(),
-            part1_time,
-            part2_time,
-        ]);
+        rows.push(vec![day.to_string(), solved, part1_time, part2_time]);
     }
     // Determine column widths
     let col_widths: Vec<usize> = (0..rows[0].len())
@@ -93,5 +88,13 @@ fn colorize_benchmark(value: &str) -> String {
         let mut base = format!(r"$${{\color{{red}}");
         base.push_str(&format!("{:.2}}}$$", time));
         base
+    }
+}
+
+fn get_solved(value_1: &str, value_2: &str) -> String {
+    if value_1 == "N/A" && value_2 == "N/A" {
+        ":x:".to_string()
+    } else {
+        "<img src=\"https://www.rust-lang.org/logos/rust-logo-32x32.png\" alt=\"Rust\" width=\"20\" />".to_string()
     }
 }
