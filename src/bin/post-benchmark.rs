@@ -9,8 +9,8 @@ fn main() {
     rows.push(vec![
         "Day".to_string(),
         "Solved".to_string(),
-        "Solution Part 1 (μs)".to_string(),
-        "Solution Part 2 (μs)".to_string(),
+        "Part 1 runtime".to_string(),
+        "Solution Part 2 runtime".to_string(),
     ]);
 
     for day in 1..=25 {
@@ -45,7 +45,9 @@ fn main() {
         if i == 0 {
             // Add separator after the header
             let mut separator: Vec<String> = col_widths.iter().map(|&w| "-".repeat(w)).collect();
-            separator[0] = separator[0].replacen("-", ":", 1);
+            separator[0] = separator[0].replacen('-', ":", 1);
+            let len = separator.last().unwrap().len();
+            separator.last_mut().unwrap().insert(len, ':');
             table.push_str(&separator.join("-:|:-"));
             table.push('\n');
         }
@@ -63,7 +65,7 @@ fn read_benchmark(path: &str) -> String {
         let json: Value = serde_json::from_str(&data).unwrap();
         json["slope"]["point_estimate"]
             .as_f64()
-            .map_or("N/A".to_string(), |v| format!("{:.2}", v / 1000.0))
+            .map_or("N/A".to_string(), format_val)
     } else {
         "N/A".to_string()
     }
@@ -74,19 +76,21 @@ fn colorize_benchmark(value: &str) -> String {
         return value.to_string();
     }
 
-    let time: f64 = value.parse().unwrap_or(0.0);
-
-    if time < 50.0 {
-        let mut base = format!(r"$${{\color{{green}}");
-        base.push_str(&format!("{:.2}}}$$", time));
+    if value.contains("ns") {
+        let mut base = r"$${{\color{{purple}}".to_string();
+        base.push_str(&format!("{}}}$$", value));
         base
-    } else if time < 100.0 {
-        let mut base = format!(r"$${{\color{{orange}}");
-        base.push_str(&format!("{:.2}}}$$", time));
+    } else if value.contains("μs") {
+        let mut base = r"$${{\color{{green}}".to_string();
+        base.push_str(&format!("{}}}$$", value));
+        base
+    } else if value.contains("ms") {
+        let mut base = r"$${{\color{{orange}}".to_string();
+        base.push_str(&format!("{}}}$$", value));
         base
     } else {
-        let mut base = format!(r"$${{\color{{red}}");
-        base.push_str(&format!("{:.2}}}$$", time));
+        let mut base = r"$${{\color{{red}}".to_string();
+        base.push_str(&format!("{}}}$$", value));
         base
     }
 }
@@ -96,5 +100,17 @@ fn get_solved(value_1: &str, value_2: &str) -> String {
         ":x:".to_string()
     } else {
         "<img src=\"https://www.rust-lang.org/logos/rust-logo-32x32.png\" alt=\"Rust\" width=\"20\" />".to_string()
+    }
+}
+
+fn format_val(v: f64) -> String {
+    if (v / 1000.0) < 1.0 {
+        format!("{:.2} ns", v)
+    } else if (v / 1000.0) < 1000.0 {
+        format!("{:.2} μs", v / 1000.0)
+    } else if (v / 1000.0) < (1000.0 * 1000.0) {
+        format!("{:.2} μs", v / (1000.0 * 1000.0))
+    } else {
+        format!("{:.2} s", v / (1000.0 * 1000.0 * 1000.0))
     }
 }

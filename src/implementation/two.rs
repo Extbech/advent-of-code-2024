@@ -1,3 +1,5 @@
+use std::cmp::min;
+
 use crate::Solution;
 
 pub struct DayTwoSolution {
@@ -61,15 +63,8 @@ fn is_safe_pair_increasing(first: u32, second: u32) -> bool {
     first < second && second <= 3 + first
 }
 
-fn can_keep_first<'a>(mut report: impl Iterator<Item = &'a u32>, increasing: bool) -> bool {
-    let (Some(&first), Some(&second)) = (report.next(), report.next()) else {
-        return false;
-    };
-    is_safe_pair(first, second, increasing)
-}
-
 fn drop_second(s: &[u32]) -> impl DoubleEndedIterator<Item = &u32> + Clone {
-    std::iter::once(&s[0]).chain(&s[2..])
+    std::iter::once(&s[0]).chain(&s[min(2, s.len())..])
 }
 
 fn report_is_safe_with_one_removal(report: &[u32]) -> bool {
@@ -93,19 +88,28 @@ fn report_is_safe_with_one_removal_optimized(report: &[u32]) -> bool {
     if !is_safe_pair(report[0], report[1], increasing) {
         return false;
     }
-    for i in 1..(report.len() - 1) {
+    for i in 1..(report.len() - 2) {
         // First time we find a cause of unsafety, we see what we have to remove to solve it
         if !is_safe_pair(report[i], report[i + 1], increasing) {
-            if can_keep_first(report[(i + 1)..].iter(), increasing) {
-                let ans2 = report_is_safe_one_sided(drop_second(&report[(i - 1)..]), increasing);
-                return ans2;
+            if is_safe_pair(report[i], report[i + 2], increasing) {
+                // skip i+1
+                return report_is_safe_one_sided(drop_second(&report[(i + 2)..]), increasing);
+            } else if is_safe_pair(report[i - 1], report[i + 1], increasing) {
+                // skip i
+                return report_is_safe_one_sided(drop_second(&report[(i + 1)..]), increasing);
             } else {
-                let ans2 = report_is_safe_one_sided(drop_second(&report[i..]), increasing);
-                return ans2;
+                return false;
             }
         }
     }
     true
+}
+
+#[test]
+fn test_optimized() {
+    assert!(report_is_safe_with_one_removal_optimized(&[
+        64, 67, 69, 70, 68, 71, 72
+    ]))
 }
 
 fn drop_nth(s: &[u32], n: usize) -> impl DoubleEndedIterator<Item = &u32> + Clone {
