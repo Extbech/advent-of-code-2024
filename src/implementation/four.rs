@@ -1,21 +1,174 @@
 use crate::Solution;
 
+const PATTERN: &str = "XMAS";
+
 pub struct DayFourSolution {
-    data: Vec<String>,
+    data: Vec<Vec<char>>,
 }
 
 impl Solution for DayFourSolution {
     const DAY: u8 = 4;
 
     fn new() -> Self {
-        todo!("Implement new function for DayFourSolution")
+        DayFourSolution {
+            data: parse_input(Self::read_data_to_vec().unwrap()),
+        }
     }
 
-    fn part_one(&self) -> ! {
-        todo!("Implement part_one function for DayFourSolution")
+    fn part_one(&self) -> u16 {
+        let mut count = 0;
+        for y in 0..self.data.len() {
+            for x in 0..self.data[y].len() {
+                if self.data[y][x] == 'X' {
+                    count += check_x_direction(&self.data[y], x);
+                    count += check_y_direction(&self.data, y, x);
+                    count += check_diag(&self.data, x, y)
+                }
+            }
+        }
+        count
     }
 
-    fn part_two(&self) -> ! {
-        todo!("Implement part_two function for DayFourSolution")
+    fn part_two(&self) -> u16 {
+        let mut count = 0;
+        for y in 1..self.data.len() - 1 {
+            for x in 1..self.data[y].len() - 1 {
+                if self.data[y][x] == 'A' && check_diag_two(&self.data, x, y) {
+                    count += 1;
+                }
+            }
+        }
+        count
+    }
+}
+
+fn parse_input(input: Vec<String>) -> Vec<Vec<char>> {
+    input.iter().map(|line| line.chars().collect()).collect()
+}
+
+fn check_x_direction(row: &[char], x: usize) -> u16 {
+    let mut count = 0;
+    // CHECK LEFT
+    if x as i16 - PATTERN.len() as i16 + 1 >= 0
+        && (1..PATTERN.len()).all(|i| row[x - i] == PATTERN.chars().nth(i).unwrap())
+    {
+        count += 1;
+    }
+    // CHECK RIGHT
+    if x + PATTERN.len() - 1 < row.len()
+        && (1..PATTERN.len()).all(|i| row[x + i] == PATTERN.chars().nth(i).unwrap())
+    {
+        count += 1;
+    }
+    count
+}
+
+fn check_y_direction(grid: &[Vec<char>], y: usize, x: usize) -> u16 {
+    let mut count = 0;
+    // CHECK UPWARDS
+    if y as i16 - PATTERN.len() as i16 + 1 >= 0
+        && (1..PATTERN.len()).all(|i| grid[y - i][x] == PATTERN.chars().nth(i).unwrap())
+    {
+        count += 1;
+    }
+    // CHECK DOWNWARDS
+    if y + PATTERN.chars().count() - 1 < grid[y].len()
+        && (1..PATTERN.len()).all(|i| grid[y + i][x] == PATTERN.chars().nth(i).unwrap())
+    {
+        count += 1;
+    }
+    count
+}
+
+fn check_diag(grid: &[Vec<char>], x: usize, y: usize) -> u16 {
+    let mut count = 0;
+    if y as i16 - PATTERN.len() as i16 + 1 >= 0 {
+        // TOP LEFT
+        if x as i16 - PATTERN.len() as i16 + 1 >= 0
+            && (1..PATTERN.len()).all(|i| grid[y - i][x - i] == PATTERN.chars().nth(i).unwrap())
+        {
+            count += 1;
+        }
+        // TOP RIGHT
+        if x + PATTERN.len() - 1 < grid[y].len()
+            && (1..PATTERN.len()).all(|i| grid[y - i][x + i] == PATTERN.chars().nth(i).unwrap())
+        {
+            count += 1;
+        }
+    }
+    if y + PATTERN.len() - 1 < grid.len() {
+        // BOTTOM LEFT
+        if x as i16 - PATTERN.len() as i16 + 1 >= 0
+            && (1..PATTERN.len()).all(|i| grid[y + i][x - i] == PATTERN.chars().nth(i).unwrap())
+        {
+            count += 1;
+        }
+        // BOTTOM RIGHT
+        if x + PATTERN.len() - 1 < grid[y].len()
+            && (1..PATTERN.len()).all(|i| grid[y + i][x + i] == PATTERN.chars().nth(i).unwrap())
+        {
+            count += 1;
+        }
+    }
+    count
+}
+
+fn check_diag_two(grid: &[Vec<char>], x: usize, y: usize) -> bool {
+    if x as i16 > 0 && x + 1 < grid[y].len() && y as i16 > 0 && y + 1 < grid.len() {
+        return check_mas(grid[y - 1][x - 1], grid[y][x], grid[y + 1][x + 1])
+            && check_mas(grid[y - 1][x + 1], grid[y][x], grid[y + 1][x - 1]);
+    }
+    false
+}
+
+fn check_mas(m: char, a: char, s: char) -> bool {
+    (m == 'M' && a == 'A' && s == 'S') || (m == 'S' && a == 'A' && s == 'M')
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs;
+
+    #[test]
+    fn test_part_one() {
+        let test_vec = parse_input(
+            fs::read_to_string("data/test/test_4.txt")
+                .map(|data| {
+                    data.lines()
+                        .map(|line| line.to_string())
+                        .collect::<Vec<String>>()
+                })
+                .unwrap(),
+        );
+
+        let day_four = DayFourSolution { data: test_vec };
+        let sol = day_four.part_one();
+
+        assert_eq!(18, sol);
+    }
+
+    #[test]
+    fn test_part_two() {
+        let test_vec = parse_input(
+            fs::read_to_string("data/test/test_4.txt")
+                .map(|data| {
+                    data.lines()
+                        .map(|line| line.to_string())
+                        .collect::<Vec<String>>()
+                })
+                .unwrap(),
+        );
+
+        let day_four = DayFourSolution { data: test_vec };
+        let sol = day_four.part_two();
+
+        assert_eq!(9, sol);
+    }
+
+    #[test]
+    fn test_helper() {
+        assert!(check_mas('M', 'A', 'S'));
+        assert!(check_mas('S', 'A', 'M'));
     }
 }
