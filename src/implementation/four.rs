@@ -8,7 +8,7 @@ impl Solution for DayFourSolution {
     const DAY: u8 = 4;
 
     fn new() -> Self {
-        todo!("Implement new function for DayFourSolution")
+        DayFourSolution { Self::read_data_to_vec() }
     }
 
     fn part_one(&self) -> ! {
