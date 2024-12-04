@@ -1,5 +1,4 @@
 use crate::Solution;
-use regex::Regex;
 use safe_goto::safe_goto;
 pub struct DayThreeSolution {
     data: String,
@@ -19,7 +18,7 @@ impl Solution for DayThreeSolution {
         let mut acc = 0;
         safe_goto! {
             begin() {
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'm' => {goto found_m()},
                         _ => {goto found_()}
@@ -28,7 +27,7 @@ impl Solution for DayThreeSolution {
             },
             found_() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'm' => {goto found_m()},
                         _ => {goto found_()}
@@ -37,7 +36,7 @@ impl Solution for DayThreeSolution {
             },
             found_m() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'm' => {goto found_m()},
                         b'u' => {goto found_mu()}
@@ -47,7 +46,7 @@ impl Solution for DayThreeSolution {
             },
             found_mu() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'm' => {goto found_m()},
                         b'l' => {goto found_mul()}
@@ -57,7 +56,7 @@ impl Solution for DayThreeSolution {
             },
             found_mul() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'm' => {goto found_m()},
                         b'(' => {goto found_mullp(0)}
@@ -67,7 +66,7 @@ impl Solution for DayThreeSolution {
             },
             found_mullp(mut l: u32) {
                 data = &data[1..];
-                if let Some(&b) = data.get(0) { 
+                if let Some(&b) = data.first() {
                     match b {
                         b'm' => {goto found_m()},
                         b'0'..=b'9' => {
@@ -81,7 +80,7 @@ impl Solution for DayThreeSolution {
             },
             found_mulcom(l: u32, mut r: u32) {
                 data = &data[1..];
-                if let Some(&b) = data.get(0) { 
+                if let Some(&b) = data.first() {
                     match b {
                         b'm' => {goto found_m()},
                         b'0'..=b'9' => {
@@ -105,7 +104,7 @@ impl Solution for DayThreeSolution {
         let mut acc = 0;
         safe_goto! {
             begin() {
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b'm' => {goto found_m()},
@@ -115,7 +114,7 @@ impl Solution for DayThreeSolution {
             },
             found_() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b'm' => {goto found_m()},
@@ -125,7 +124,7 @@ impl Solution for DayThreeSolution {
             },
             found_d() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b'o' => {goto found_do()},
@@ -136,7 +135,7 @@ impl Solution for DayThreeSolution {
             },
             found_do() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b'n' => {goto found_don()}
@@ -147,7 +146,7 @@ impl Solution for DayThreeSolution {
             },
             found_don() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b'\'' => {goto found_donap()}
@@ -158,7 +157,7 @@ impl Solution for DayThreeSolution {
             },
             found_donap() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b't' => {goto found_dont()}
@@ -169,7 +168,7 @@ impl Solution for DayThreeSolution {
             },
             found_dont() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b'(' => {goto found_dontlp()}
@@ -180,7 +179,7 @@ impl Solution for DayThreeSolution {
             },
             found_dontlp() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b')' => {goto dont_found_()}
@@ -191,7 +190,7 @@ impl Solution for DayThreeSolution {
             },
             dont_found_() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto dont_found_d()},
                         _ => {goto dont_found_()}
@@ -200,7 +199,7 @@ impl Solution for DayThreeSolution {
             },
             dont_found_d() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto dont_found_d()},
                         b'o' => {goto dont_found_do()},
@@ -210,7 +209,7 @@ impl Solution for DayThreeSolution {
             },
             dont_found_do() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto dont_found_d()},
                         b'(' => {goto dont_found_dolp()},
@@ -220,7 +219,7 @@ impl Solution for DayThreeSolution {
             },
             dont_found_dolp() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto dont_found_d()},
                         b')' => {goto found_()},
@@ -230,7 +229,7 @@ impl Solution for DayThreeSolution {
             },
             found_m() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b'm' => {goto found_m()},
@@ -241,7 +240,7 @@ impl Solution for DayThreeSolution {
             },
             found_mu() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b'm' => {goto found_m()},
@@ -252,7 +251,7 @@ impl Solution for DayThreeSolution {
             },
             found_mul() {
                 data = &data[1..];
-                if let Some(b) = data.get(0) { 
+                if let Some(b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b'm' => {goto found_m()},
@@ -263,7 +262,7 @@ impl Solution for DayThreeSolution {
             },
             found_mullp(mut l: u32) {
                 data = &data[1..];
-                if let Some(&b) = data.get(0) { 
+                if let Some(&b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b'm' => {goto found_m()},
@@ -278,7 +277,7 @@ impl Solution for DayThreeSolution {
             },
             found_mulcom(l: u32, mut r: u32) {
                 data = &data[1..];
-                if let Some(&b) = data.get(0) { 
+                if let Some(&b) = data.first() {
                     match b {
                         b'd' => {goto found_d()},
                         b'm' => {goto found_m()},
