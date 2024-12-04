@@ -91,12 +91,14 @@ fn report_is_safe_with_one_removal_optimized(report: &[u32]) -> bool {
     for i in 1..(report.len() - 2) {
         // First time we find a cause of unsafety, we see what we have to remove to solve it
         if !is_safe_pair(report[i], report[i + 1], increasing) {
-            if is_safe_pair(report[i], report[i + 2], increasing) { // skip i+1
+            if is_safe_pair(report[i], report[i + 2], increasing) {
+                // skip i+1
                 return report_is_safe_one_sided(drop_second(&report[(i + 2)..]), increasing);
-            } else if is_safe_pair(report[i - 1], report[i + 1], increasing) { // skip i
+            } else if is_safe_pair(report[i - 1], report[i + 1], increasing) {
+                // skip i
                 return report_is_safe_one_sided(drop_second(&report[(i + 1)..]), increasing);
             } else {
-                return false
+                return false;
             }
         }
     }
@@ -105,7 +107,9 @@ fn report_is_safe_with_one_removal_optimized(report: &[u32]) -> bool {
 
 #[test]
 fn test_optimized() {
-    assert!(report_is_safe_with_one_removal_optimized(&[64,67,69,70,68,71,72]))
+    assert!(report_is_safe_with_one_removal_optimized(&[
+        64, 67, 69, 70, 68, 71, 72
+    ]))
 }
 
 fn drop_nth(s: &[u32], n: usize) -> impl DoubleEndedIterator<Item = &u32> + Clone {

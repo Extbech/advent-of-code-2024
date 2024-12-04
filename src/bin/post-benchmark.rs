@@ -9,8 +9,8 @@ fn main() {
     rows.push(vec![
         "Day".to_string(),
         "Solved".to_string(),
-        "Solution Part 1 (μs)".to_string(),
-        "Solution Part 2 (μs)".to_string(),
+        "Part 1 runtime".to_string(),
+        "Solution Part 2 runtime".to_string(),
     ]);
 
     for day in 1..=25 {
@@ -46,6 +46,8 @@ fn main() {
             // Add separator after the header
             let mut separator: Vec<String> = col_widths.iter().map(|&w| "-".repeat(w)).collect();
             separator[0] = separator[0].replacen("-", ":", 1);
+            let len = separator.last().unwrap().len();
+            separator.last_mut().unwrap().insert(len, ':');
             table.push_str(&separator.join("-:|:-"));
             table.push('\n');
         }

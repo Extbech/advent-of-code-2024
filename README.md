@@ -81,30 +81,30 @@ Benchmarking results are located in the `target/criterion` directory of the repo
 
 ### Benchmark Results
 
-| Day |                                         Solved                                          |   Solution Part 1 (μs)    | Solution Part 2 (μs)      |
-| :-: | :-------------------------------------------------------------------------------------: | :-----------------------: | :------------------------ |
-|  1  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> | $${\color{orange}88.68}$$ | $${\color{orange}89.94}$$ |
-|  2  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> |  $${\color{green}1.62}$$  | $${\color{green}4.88}$$   |
-|  3  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> | $${\color{green}24.63}$$  | $${\color{green}11.50}$$  |
-|  4  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> |  $${\color{red}129.05}$$  | $${\color{orange}57.84}$$ |
-|  5  |                                           :x:                                           |            N/A            | N/A                       |
-|  6  |                                           :x:                                           |            N/A            | N/A                       |
-|  7  |                                           :x:                                           |            N/A            | N/A                       |
-|  8  |                                           :x:                                           |            N/A            | N/A                       |
-|  9  |                                           :x:                                           |            N/A            | N/A                       |
-| 10  |                                           :x:                                           |            N/A            | N/A                       |
-| 11  |                                           :x:                                           |            N/A            | N/A                       |
-| 12  |                                           :x:                                           |            N/A            | N/A                       |
-| 13  |                                           :x:                                           |            N/A            | N/A                       |
-| 14  |                                           :x:                                           |            N/A            | N/A                       |
-| 15  |                                           :x:                                           |            N/A            | N/A                       |
-| 16  |                                           :x:                                           |            N/A            | N/A                       |
-| 17  |                                           :x:                                           |            N/A            | N/A                       |
-| 18  |                                           :x:                                           |            N/A            | N/A                       |
-| 19  |                                           :x:                                           |            N/A            | N/A                       |
-| 20  |                                           :x:                                           |            N/A            | N/A                       |
-| 21  |                                           :x:                                           |            N/A            | N/A                       |
-| 22  |                                           :x:                                           |            N/A            | N/A                       |
-| 23  |                                           :x:                                           |            N/A            | N/A                       |
-| 24  |                                           :x:                                           |            N/A            | N/A                       |
-| 25  |                                           :x:                                           |            N/A            | N/A                       |
+| Day |                                         Solved                                          |      Part 1 runtime       |  Solution Part 2 runtime  |
+| :-: | :-------------------------------------------------------------------------------------: | :-----------------------: | :-----------------------: |
+|  1  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> | $${\color{orange}87.49}$$ | $${\color{orange}89.73}$$ |
+|  2  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> |  $${\color{green}1.84}$$  |  $${\color{green}4.52}$$  |
+|  3  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> | $${\color{green}25.13}$$  | $${\color{green}10.10}$$  |
+|  4  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> |  $${\color{red}119.16}$$  | $${\color{orange}58.58}$$ |
+|  5  |                                           :x:                                           |            N/A            |            N/A            |
+|  6  |                                           :x:                                           |            N/A            |            N/A            |
+|  7  |                                           :x:                                           |            N/A            |            N/A            |
+|  8  |                                           :x:                                           |            N/A            |            N/A            |
+|  9  |                                           :x:                                           |            N/A            |            N/A            |
+| 10  |                                           :x:                                           |            N/A            |            N/A            |
+| 11  |                                           :x:                                           |            N/A            |            N/A            |
+| 12  |                                           :x:                                           |            N/A            |            N/A            |
+| 13  |                                           :x:                                           |            N/A            |            N/A            |
+| 14  |                                           :x:                                           |            N/A            |            N/A            |
+| 15  |                                           :x:                                           |            N/A            |            N/A            |
+| 16  |                                           :x:                                           |            N/A            |            N/A            |
+| 17  |                                           :x:                                           |            N/A            |            N/A            |
+| 18  |                                           :x:                                           |            N/A            |            N/A            |
+| 19  |                                           :x:                                           |            N/A            |            N/A            |
+| 20  |                                           :x:                                           |            N/A            |            N/A            |
+| 21  |                                           :x:                                           |            N/A            |            N/A            |
+| 22  |                                           :x:                                           |            N/A            |            N/A            |
+| 23  |                                           :x:                                           |            N/A            |            N/A            |
+| 24  |                                           :x:                                           |            N/A            |            N/A            |
+| 25  |                                           :x:                                           |            N/A            |            N/A            |
