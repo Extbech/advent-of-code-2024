@@ -9,6 +9,7 @@ description = "Package containing solution and benchmarking for Advent of Code 2
 criterion = "0.5.1"
 regex = "1.11.1"
 safe-goto = "0.2.0"
+serde_json = "1.0"
 
 [[bench]]
 name = "benchmark_aoc"

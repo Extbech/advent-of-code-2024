@@ -75,3 +75,34 @@ cargo bench
 ```
 
 Benchmarking results are located in the `target/criterion` directory of the repository.
+
+
+### Benchmark Results
+
+Day  |  Solved                                                                                   |  Solution Part 1 (μs)       |  Solution Part 2 (μs)     
+:---:|:-----------------------------------------------------------------------------------------:|:---------------------------:|:--------------------------
+1    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{orange}88.78}$$  |  $${\color{orange}89.86}$$
+2    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}1.60}$$    |  $${\color{green}4.96}$$  
+3    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}24.78}$$   |  $${\color{green}11.58}$$ 
+4    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{red}127.93}$$    |  $${\color{orange}57.82}$$
+5    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+6    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+7    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+8    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+9    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+10   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+11   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+12   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+13   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+14   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+15   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+16   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+17   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+18   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+19   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+20   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+21   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+22   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+23   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+24   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
+25   |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  N/A                        |  N/A                      
