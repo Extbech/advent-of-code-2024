@@ -1,21 +1,112 @@
+use std::collections::HashMap;
+
 use crate::Solution;
 
 pub struct DayFiveSolution {
-    data: Vec<String>,
+    pages: Vec<Vec<u8>>,
+    rules: HashMap<u8, Vec<u8>>
 }
 
 impl Solution for DayFiveSolution {
     const DAY: u8 = 5;
 
     fn new() -> Self {
-        todo!("Implement new function for DayFiveSolution")
+        let parsed_input = parse_input(Self::read_data_to_string().unwrap());
+        DayFiveSolution { pages: parsed_input.0, rules: parsed_input.1 }
     }
 
-    fn part_one(&self) -> ! {
-        todo!("Implement part_one function for DayFiveSolution")
+    /// Needs refactoring !!!
+    fn part_one(&self) -> u16 {
+        let mut count = 0;
+        for page in &self.pages {
+            let mut valid = true;
+            for i in 1..page.len() {
+                if let Some(rule) = self.rules.get(&page[i]) {
+                    if page[0..i].iter().any(|x| rule.contains(x)) {
+                        valid = false;
+                        break;
+                    }
+                }
+            }
+            if valid {
+                count += page[page.len() / 2] as u16;
+            }
+        }
+        count
     }
 
-    fn part_two(&self) -> ! {
-        todo!("Implement part_two function for DayFiveSolution")
+    fn part_two(&self) -> u16 {
+        let wrong_pages = find_incorrect_pages(&self.pages, &self.rules);
+        let mut count = 0;
+        for page in wrong_pages {
+            count += get_fixed_page_sum(page, &self.rules);
+        }
+        count
     }
+
+}
+
+fn parse_input(input: String) -> (Vec<Vec<u8>>, HashMap<u8, Vec<u8>>) {
+    let mut rules: HashMap<u8, Vec<u8>> = HashMap::new();
+    let mut pages = Vec::new();
+
+    let mut lines = input.lines();
+    while let Some(line) = lines.next() {
+        if line.is_empty() {
+            break;
+        }
+        let parts: Vec<u8> = line.split("|").map(|x| x.parse::<u8>().unwrap()).collect();
+        if rules.contains_key(&parts[0]) {
+            rules.get_mut(&parts[0]).unwrap().push(parts[1]);
+        } else {
+            rules.insert(parts[0], vec![parts[1]]);
+        }
+    }
+
+    for line in lines {
+        pages.push(line.split(",").map(|s| s.parse::<u8>().unwrap()).collect());
+    }
+
+    (pages, rules)
+}
+
+fn find_incorrect_pages<'a>(pages: &'a Vec<Vec<u8>>, rules: &HashMap<u8, Vec<u8>>) -> Vec<&'a Vec<u8>> {
+    let mut res: Vec<&Vec<u8>> = vec![];
+        for i in 0..pages.len() {
+            for j in 1..pages[i].len() {
+                if let Some(rule) = rules.get(&pages[i][j]) {
+                    if pages[i][0..j].iter().any(|x| rule.contains(x)) {
+                        res.push(&pages[i]);
+                        break;
+                    }
+                }
+            }
+        }
+        res
+}
+
+fn get_fixed_page_sum(page: &Vec<u8>, rules: &HashMap<u8, Vec<u8>>) -> u16 {
+    while !page_is_correct(page, rules) {
+        for i in 1..page.len() {
+            if let Some(rule) = rules.get(&page[i]) {
+                if let Some(fault) = page.iter().position(|x| rule.contains(x)) {
+                    let intermediate = page[i];
+                    page[i] = page[fault];
+                    page[fault] = intermediate;
+                }
+            }
+        }
+    }
+    page[page.len() / 2] as u16
+}
+
+fn page_is_correct(page: &Vec<u8>, rules: &HashMap<u8, Vec<u8>>) -> bool {
+    for i in 1..page.len() {
+        if let Some(rule) = rules.get(&page[i]) {
+            if page[0..i].iter().any(|x| rule.contains(x)) {
+                return false;
+            }
+        }
+    }
+    true
 }
