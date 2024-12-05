@@ -85,7 +85,7 @@ fn colorize_benchmark(value: &str) -> String {
         base.push_str(&format!("{}}}$$", value));
         base
     } else if value.contains("ms") {
-        let mut base = r"$${\color{orange}".to_string();
+        let mut base = r"$${\color{yellow}".to_string();
         base.push_str(&format!("{}}}$$", value));
         base
     } else {
