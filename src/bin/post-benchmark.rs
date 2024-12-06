@@ -63,7 +63,7 @@ fn main() {
 fn read_benchmark(path: &str) -> String {
     if let Ok(data) = fs::read_to_string(path) {
         let json: Value = serde_json::from_str(&data).unwrap();
-        json["slope"]["point_estimate"]
+        json["mean"]["point_estimate"]
             .as_f64()
             .map_or("N/A".to_string(), format_val)
     } else {
@@ -77,20 +77,20 @@ fn colorize_benchmark(value: &str) -> String {
     }
 
     if value.contains("ns") {
-        let mut base = r"$${\color{purple}".to_string();
-        base.push_str(&format!("{}}}$$", value));
+        let mut base = r"$${\color{purple}\text{".to_string();
+        base.push_str(&format!("{}}}}}$$", value));
         base
     } else if value.contains("μs") {
-        let mut base = r"$${\color{green}".to_string();
-        base.push_str(&format!("{}}}$$", value));
+        let mut base = r"$${\color{green}\text{".to_string();
+        base.push_str(&format!("{}}}}}$$", value));
         base
     } else if value.contains("ms") {
-        let mut base = r"$${\color{yellow}".to_string();
-        base.push_str(&format!("{}}}$$", value));
+        let mut base = r"$${\color{yellow}\text{".to_string();
+        base.push_str(&format!("{}}}}}$$", value));
         base
     } else {
-        let mut base = r"$${\color{red}".to_string();
-        base.push_str(&format!("{}}}$$", value));
+        let mut base = r"$${\color{red}\text{".to_string();
+        base.push_str(&format!("{}}}}}$$", value));
         base
     }
 }
@@ -109,7 +109,7 @@ fn format_val(v: f64) -> String {
     } else if (v / 1000.0) < 1000.0 {
         format!("{:.2} μs", v / 1000.0)
     } else if (v / 1000.0) < (1000.0 * 1000.0) {
-        format!("{:.2} μs", v / (1000.0 * 1000.0))
+        format!("{:.2} ms", v / (1000.0 * 1000.0))
     } else {
         format!("{:.2} s", v / (1000.0 * 1000.0 * 1000.0))
     }
