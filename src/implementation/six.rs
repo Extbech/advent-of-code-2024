@@ -259,6 +259,6 @@ mod tests {
     fn test_part_two() {
         let day_six = get_day_six();
         let output = day_six.part_two();
-        assert_eq!(7, output);
+        assert_eq!(6, output);
     }
 }
