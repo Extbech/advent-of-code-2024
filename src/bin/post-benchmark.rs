@@ -77,20 +77,20 @@ fn colorize_benchmark(value: &str) -> String {
     }
 
     if value.contains("ns") {
-        let mut base = r"$${\color{purple}".to_string();
-        base.push_str(&format!("{}}}$$", value));
+        let mut base = r"$${\color{purple}\text{".to_string();
+        base.push_str(&format!("{}}}}}$$", value));
         base
     } else if value.contains("μs") {
-        let mut base = r"$${\color{green}".to_string();
-        base.push_str(&format!("{}}}$$", value));
+        let mut base = r"$${\color{green}\text{".to_string();
+        base.push_str(&format!("{}}}}}$$", value));
         base
     } else if value.contains("ms") {
-        let mut base = r"$${\color{yellow}".to_string();
-        base.push_str(&format!("{}}}$$", value));
+        let mut base = r"$${\color{yellow}\text{".to_string();
+        base.push_str(&format!("{}}}}}$$", value));
         base
     } else {
-        let mut base = r"$${\color{red}".to_string();
-        base.push_str(&format!("{}}}$$", value));
+        let mut base = r"$${\color{red}\text{".to_string();
+        base.push_str(&format!("{}}}}}$$", value));
         base
     }
 }
