@@ -46,7 +46,6 @@ impl Solution for DayFiveSolution {
         }
         count
     }
-
 }
 
 fn parse_input(input: String) -> (Vec<Vec<u8>>, HashMap<u8, Vec<u8>>) {
