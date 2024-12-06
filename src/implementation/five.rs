@@ -20,22 +20,17 @@ impl Solution for DayFiveSolution {
 
     /// Needs refactoring !!!
     fn part_one(&self) -> u16 {
-        let mut count = 0;
-        for page in &self.pages {
-            let mut valid = true;
-            for i in 1..page.len() {
-                if let Some(rule) = self.rules.get(&page[i]) {
-                    if page[0..i].iter().any(|x| rule.contains(x)) {
-                        valid = false;
-                        break;
+        self.pages.iter().filter_map(|page| {
+                for i in 1..page.len() {
+                    if let Some(rule) = self.rules.get(&page[i]) {
+                        if page[0..i].iter().any(|x| rule.contains(x)) {
+                            return None
+                        }
                     }
                 }
+                return Some(page[page.len() / 2] as u16);
             }
-            if valid {
-                count += page[page.len() / 2] as u16;
-            }
-        }
-        count
+        ).sum()
     }
 
     fn part_two(&self) -> u16 {
