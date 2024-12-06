@@ -79,32 +79,33 @@ sh ./bench.sh
 
 Benchmarking results are located in the `target/criterion` directory of the repository.
 
+
 ### Benchmark Results
 
-| Day |                                         Solved                                          |        Part 1 runtime        |        Part 2 runtime         |
-| :-: | :-------------------------------------------------------------------------------------: | :--------------------------: | :---------------------------: |
-|  1  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> | $${\color{green}94.93 μs}$$  |  $${\color{green}96.48 μs}$$  |
-|  2  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> |  $${\color{green}2.13 μs}$$  |  $${\color{green}4.38 μs}$$   |
-|  3  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> | $${\color{green}24.69 μs}$$  |  $${\color{green}11.61 μs}$$  |
-|  4  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> | $${\color{green}126.07 μs}$$ |  $${\color{green}58.28 μs}$$  |
-|  5  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> | $${\color{green}58.45 μs}$$  | $${\color{green}882.69 μs}$$  |
-|  6  | <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" /> | $${\color{green}168.05 μs}$$ | $${\color{yellow}266.89 ms}$$ |
-|  7  |                                           :x:                                           |             N/A              |              N/A              |
-|  8  |                                           :x:                                           |             N/A              |              N/A              |
-|  9  |                                           :x:                                           |             N/A              |              N/A              |
-| 10  |                                           :x:                                           |             N/A              |              N/A              |
-| 11  |                                           :x:                                           |             N/A              |              N/A              |
-| 12  |                                           :x:                                           |             N/A              |              N/A              |
-| 13  |                                           :x:                                           |             N/A              |              N/A              |
-| 14  |                                           :x:                                           |             N/A              |              N/A              |
-| 15  |                                           :x:                                           |             N/A              |              N/A              |
-| 16  |                                           :x:                                           |             N/A              |              N/A              |
-| 17  |                                           :x:                                           |             N/A              |              N/A              |
-| 18  |                                           :x:                                           |             N/A              |              N/A              |
-| 19  |                                           :x:                                           |             N/A              |              N/A              |
-| 20  |                                           :x:                                           |             N/A              |              N/A              |
-| 21  |                                           :x:                                           |             N/A              |              N/A              |
-| 22  |                                           :x:                                           |             N/A              |              N/A              |
-| 23  |                                           :x:                                           |             N/A              |              N/A              |
-| 24  |                                           :x:                                           |             N/A              |              N/A              |
-| 25  |                                           :x:                                           |             N/A              |              N/A              |
+Day  |  Solved                                                                                   |  Part 1 runtime                        |  Part 2 runtime                      
+:---:|:-----------------------------------------------------------------------------------------:|:--------------------------------------:|:-------------------------------------:
+1    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{94.93 μs}}$$    |  $${\color{green}\text{96.48 μs}}$$  
+2    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{2.13 μs}}$$     |  $${\color{green}\text{4.38 μs}}$$   
+3    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{24.69 μs}}$$    |  $${\color{green}\text{11.61 μs}}$$  
+4    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{126.07 μs}}$$   |  $${\color{green}\text{58.28 μs}}$$  
+5    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{58.45 μs}}$$    |  $${\color{green}\text{882.69 μs}}$$ 
+6    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{168.05 μs}}$$   |  $${\color{yellow}\text{266.89 ms}}$$
+7    |  :x:                                                                                      |  N/A                                   |  N/A                                 
+8    |  :x:                                                                                      |  N/A                                   |  N/A                                 
+9    |  :x:                                                                                      |  N/A                                   |  N/A                                 
+10   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+11   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+12   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+13   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+14   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+15   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+16   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+17   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+18   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+19   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+20   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+21   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+22   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+23   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+24   |  :x:                                                                                      |  N/A                                   |  N/A                                 
+25   |  :x:                                                                                      |  N/A                                   |  N/A                                 
