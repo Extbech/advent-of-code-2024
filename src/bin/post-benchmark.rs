@@ -63,7 +63,7 @@ fn main() {
 fn read_benchmark(path: &str) -> String {
     if let Ok(data) = fs::read_to_string(path) {
         let json: Value = serde_json::from_str(&data).unwrap();
-        json["slope"]["point_estimate"]
+        json["mean"]["point_estimate"]
             .as_f64()
             .map_or("N/A".to_string(), format_val)
     } else {
@@ -109,7 +109,7 @@ fn format_val(v: f64) -> String {
     } else if (v / 1000.0) < 1000.0 {
         format!("{:.2} μs", v / 1000.0)
     } else if (v / 1000.0) < (1000.0 * 1000.0) {
-        format!("{:.2} μs", v / (1000.0 * 1000.0))
+        format!("{:.2} ms", v / (1000.0 * 1000.0))
     } else {
         format!("{:.2} s", v / (1000.0 * 1000.0 * 1000.0))
     }
