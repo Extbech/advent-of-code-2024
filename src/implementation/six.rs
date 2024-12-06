@@ -104,12 +104,14 @@ impl Solution for DaySixSolution {
                 }
                 Direction::Left => {
                     if self.data[y][x - 1] != OBSTACLE {
-                        if obstacle_placement_leads_to_loop(&self.data, x, y, Direction::Left)
+                        if !valid_squares.contains(&(x - 1, y)) {
+                            if obstacle_placement_leads_to_loop(&self.data, x, y, Direction::Left)
                             && (find_guard_pos(&self.data).0, find_guard_pos(&self.data).1)
-                                != (x - 1, y)
-                        {
-                            valid_squares.insert((x - 1, y));
-                        };
+                            != (x - 1, y)
+                            {
+                                valid_squares.insert((x - 1, y));
+                            };
+                        }
                         x -= 1;
                     } else {
                         dir = Direction::Up;
@@ -188,7 +190,7 @@ fn obstacle_placement_leads_to_loop(
         }
         match dir {
             Direction::Up => {
-                if grid[y - 1][x] != OBSTACLE && (x, y - 1) != temp_block_pos{
+                if grid[y - 1][x] != OBSTACLE && ((x, y - 1) != temp_block_pos){
                     y -= 1;
                 } else {
                     dir = Direction::Right;
@@ -196,7 +198,7 @@ fn obstacle_placement_leads_to_loop(
                 }
             }
             Direction::Down => {
-                if grid[y + 1][x] != OBSTACLE && (x, y + 1) != temp_block_pos {
+                if grid[y + 1][x] != OBSTACLE && ((x, y + 1) != temp_block_pos) {
                     y += 1;
                 } else {
                     dir = Direction::Left;
@@ -204,7 +206,7 @@ fn obstacle_placement_leads_to_loop(
                 }
             }
             Direction::Left => {
-                if grid[y][x - 1] != OBSTACLE && (x - 1, y) != temp_block_pos {
+                if grid[y][x - 1] != OBSTACLE && ((x - 1, y) != temp_block_pos) {
                     x -= 1;
                 } else {
                     dir = Direction::Up;
@@ -212,7 +214,7 @@ fn obstacle_placement_leads_to_loop(
                 }
             }
             Direction::Right => {
-                if grid[y][x + 1] != OBSTACLE && (x + 1, y) != temp_block_pos {
+                if grid[y][x + 1] != OBSTACLE && ((x + 1, y) != temp_block_pos) {
                     x += 1;
                 } else {
                     dir = Direction::Down;
