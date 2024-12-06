@@ -18,26 +18,24 @@ impl Solution for DayFiveSolution {
         }
     }
 
-    /// Needs refactoring !!!
     fn part_one(&self) -> u16 {
-        self.pages.iter().filter_map(|page| {
-                for i in 1..page.len() {
-                    if let Some(rule) = self.rules.get(&page[i]) {
-                        if page[0..i].iter().any(|x| rule.contains(x)) {
-                            return None
-                        }
-                    }
+        self.pages
+            .iter()
+            .filter_map(|page| {
+                if page_is_correct(page, &self.rules) {
+                    Some(page[page.len() / 2] as u16)
+                } else {
+                    None
                 }
-                return Some(page[page.len() / 2] as u16);
-            }
-        ).sum()
+            })
+            .sum()
     }
 
     fn part_two(&self) -> u16 {
-        let mut wrong_pages = find_incorrect_pages(&self.pages, &self.rules);
         let mut count = 0;
-        for page in wrong_pages.iter_mut() {
-            count += get_fixed_page_sum(page, &self.rules);
+        let mut buf = Vec::new();
+        for page in find_incorrect_pages(&self.pages, &self.rules) {
+            count += get_fixed_page_middle(&mut buf, page, &self.rules);
         }
         count
     }
@@ -67,42 +65,43 @@ fn parse_input(input: String) -> (Vec<Vec<u8>>, HashMap<u8, Vec<u8>>) {
     (pages, rules)
 }
 
-fn find_incorrect_pages(pages: &Vec<Vec<u8>>, rules: &HashMap<u8, Vec<u8>>) -> Vec<Vec<u8>> {
-    let mut res: Vec<Vec<u8>> = vec![];
-    for page in pages {
+fn find_incorrect_pages<'a, 'b: 'a>(
+    pages: &'a [Vec<u8>],
+    rules: &'b HashMap<u8, Vec<u8>>,
+) -> impl Iterator<Item = &'a [u8]> + 'a {
+    pages.iter().filter_map(|page| {
         for j in 1..page.len() {
             if let Some(rule) = rules.get(&page[j]) {
                 if page[0..j].iter().any(|x| rule.contains(x)) {
-                    res.push(page.clone());
-                    break;
+                    return Some(page.as_ref());
                 }
             }
         }
-    }
-    res
+        None
+    })
 }
 
-fn get_fixed_page_sum(page: &mut [u8], rules: &HashMap<u8, Vec<u8>>) -> u16 {
-    // Early check for middle is correct.
-    if let Some(rule) = rules.get(&page[page.len() / 2]) {
-        if !page[0..page.len() / 2].iter().any(|x| rule.contains(x))
-            && !page[page.len() / 2..page.len()]
-                .iter()
-                .any(|x| rules.get(x).unwrap().contains(&page[page.len() / 2]))
-        {
-            return page[page.len() / 2] as u16;
-        }
-    }
-    while !page_is_correct(page, rules) {
-        for i in 1..page.len() {
-            if let Some(rule) = rules.get(&page[i]) {
-                if let Some(fault) = page.iter().position(|x| rule.contains(x)) {
-                    page.swap(i, fault);
+fn get_fixed_page_middle(buf: &mut Vec<u8>, page: &[u8], rules: &HashMap<u8, Vec<u8>>) -> u16 {
+    buf.clear();
+    buf.extend_from_slice(page);
+    fix_page(buf, rules);
+    buf[buf.len() / 2] as u16
+}
+
+fn fix_page(buf: &mut [u8], rules: &HashMap<u8, Vec<u8>>) {
+    let mut i = buf.len() - 1;
+    loop {
+        if let Some(rule) = rules.get(&buf[i]) {
+            if let Some(fault) = buf[..i].iter().position(|x| rule.contains(x)) {
+                buf.swap(i, fault);
+            } else {
+                if i == 0 {
+                    return;
                 }
+                i -= 1;
             }
         }
     }
-    page[page.len() / 2] as u16
 }
 
 fn page_is_correct(page: &[u8], rules: &HashMap<u8, Vec<u8>>) -> bool {
