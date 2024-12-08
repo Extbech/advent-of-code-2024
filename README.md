@@ -84,13 +84,13 @@ Benchmarking results are located in the `target/criterion` directory of the repo
 
 Day  |  Solved                                                                                   |  Part 1 runtime                        |  Part 2 runtime                      
 :---:|:-----------------------------------------------------------------------------------------:|:--------------------------------------:|:-------------------------------------:
-1    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{90.56 μs}}$$    |  $${\color{green}\text{90.23 μs}}$$  
-2    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{1.60 μs}}$$     |  $${\color{green}\text{4.02 μs}}$$   
-3    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{25.24 μs}}$$    |  $${\color{green}\text{10.48 μs}}$$  
-4    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{121.50 μs}}$$   |  $${\color{green}\text{58.76 μs}}$$  
-5    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{58.94 μs}}$$    |  $${\color{green}\text{168.04 μs}}$$ 
-6    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{167.33 μs}}$$   |  $${\color{yellow}\text{262.65 ms}}$$
-7    |  :x:                                                                                      |  N/A                                   |  N/A                                 
+1    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{93.96 μs}}$$    |  $${\color{green}\text{95.72 μs}}$$  
+2    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{2.13 μs}}$$     |  $${\color{green}\text{4.37 μs}}$$   
+3    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{24.72 μs}}$$    |  $${\color{green}\text{12.14 μs}}$$  
+4    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{123.00 μs}}$$   |  $${\color{green}\text{60.01 μs}}$$  
+5    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{61.23 μs}}$$    |  $${\color{green}\text{164.83 μs}}$$ 
+6    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{168.66 μs}}$$   |  $${\color{yellow}\text{264.05 ms}}$$
+7    |  <img src="https://www.rust-lang.org/logos/rust-logo-32x32.png" alt="Rust" width="20" />  |  $${\color{green}\text{323.81 μs}}$$   |  $${\color{yellow}\text{15.63 ms}}$$ 
 8    |  :x:                                                                                      |  N/A                                   |  N/A                                 
 9    |  :x:                                                                                      |  N/A                                   |  N/A                                 
 10   |  :x:                                                                                      |  N/A                                   |  N/A                                 
