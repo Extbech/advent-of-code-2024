@@ -1,4 +1,8 @@
-use std::{cmp::{max, min}, collections::{HashMap, HashSet}, hash::Hash};
+use std::{
+    cmp::{max, min},
+    collections::{HashMap, HashSet},
+    hash::Hash,
+};
 
 use crate::Solution;
 
@@ -40,13 +44,22 @@ impl Solution for DaySixSolution {
     fn part_two(&self) -> usize {
         let mut valid_squares: HashSet<(usize, usize)> = HashSet::new();
         let mut visited_squares: HashSet<(usize, usize)> = HashSet::new();
-        let mut memo= HashMap::new();
+        let mut memo = HashMap::new();
         let (mut x, mut y, mut dir) = find_guard_pos(&self.data);
         visited_squares.insert((x, y));
-        while let Some((x_next, y_next)) = free_step(x, y, self.data[0].len() - 1, self.data.len() - 1, dir) {
+        while let Some((x_next, y_next)) =
+            free_step(x, y, self.data[0].len() - 1, self.data.len() - 1, dir)
+        {
             if self.data[y_next][x_next] != OBSTACLE {
                 if !visited_squares.contains(&(x_next, y_next))
-                    && obstacle_placement_leads_to_loop(&self.data, x, y, (x_next, y_next),next_dir(dir), &mut memo)
+                    && obstacle_placement_leads_to_loop(
+                        &self.data,
+                        x,
+                        y,
+                        (x_next, y_next),
+                        next_dir(dir),
+                        &mut memo,
+                    )
                 {
                     valid_squares.insert((x_next, y_next));
                 };
@@ -92,20 +105,31 @@ fn next_dir(dir: Direction) -> Direction {
     }
 }
 
-fn free_step(x: usize, y: usize, x_max: usize, y_max: usize, dir: Direction) -> Option<(usize, usize)> {
+fn free_step(
+    x: usize,
+    y: usize,
+    x_max: usize,
+    y_max: usize,
+    dir: Direction,
+) -> Option<(usize, usize)> {
     if is_at_bounds(x, y, x_max, y_max) {
         return None;
     }
     Some(match dir {
-        Direction::Up => (x, y-1),
-        Direction::Right => (x+1, y),
-        Direction::Down => (x, y+1),
-        Direction::Left => (x-1, y),
+        Direction::Up => (x, y - 1),
+        Direction::Right => (x + 1, y),
+        Direction::Down => (x, y + 1),
+        Direction::Left => (x - 1, y),
     })
 }
 
-fn mov_one(grid: &[Vec<u8>], x: usize, y: usize, dir: Direction) -> Option<(usize, usize, Direction)> {
-    let (x_new, y_new) = free_step(x, y, grid[0].len()-1, grid.len()-1, dir)?;
+fn mov_one(
+    grid: &[Vec<u8>],
+    x: usize,
+    y: usize,
+    dir: Direction,
+) -> Option<(usize, usize, Direction)> {
+    let (x_new, y_new) = free_step(x, y, grid[0].len() - 1, grid.len() - 1, dir)?;
     if grid[y_new][x_new] == OBSTACLE {
         Some((x, y, next_dir(dir)))
     } else {
@@ -119,30 +143,34 @@ fn in_square(c1: (usize, usize), c2: (usize, usize), p: (usize, usize)) -> bool 
     c_min.0 <= p.0 && p.0 <= c_max.0 && c_min.1 <= p.1 && p.1 <= c_max.1
 }
 
-fn mov_till_turn(grid: &[Vec<u8>], x: usize, y: usize, dir: Direction, temp_block_pos: (usize, usize), memo: &mut HashMap<(usize, usize, Direction), (usize, usize, Direction)>) -> Option<(usize, usize, Direction)> {
-    if is_at_bounds(x, y, grid[0].len()-1, grid.len()-1) {
+fn mov_till_turn(
+    grid: &[Vec<u8>],
+    x: usize,
+    y: usize,
+    dir: Direction,
+    temp_block_pos: (usize, usize),
+    memo: &mut HashMap<(usize, usize, Direction), (usize, usize, Direction)>,
+) -> Option<(usize, usize, Direction)> {
+    if is_at_bounds(x, y, grid[0].len() - 1, grid.len() - 1) {
         return None;
     }
     if let Some(&(x_new, y_new, dir_new)) = memo.get(&(x, y, dir)) {
         if !in_square((x, y), (x_new, y_new), temp_block_pos) {
-            return Some((x_new, y_new, dir_new))
+            return Some((x_new, y_new, dir_new));
         }
     }
     let (mut x_old, mut y_old) = (x, y);
     loop {
-        let Some((x_new, y_new)) = free_step(x_old, y_old, grid[0].len()-1, grid.len()-1, dir) else {
-            return None
-        };
+        let (x_new, y_new) = free_step(x_old, y_old, grid[0].len() - 1, grid.len() - 1, dir)?;
         if grid[y_new][x_new] == OBSTACLE {
             memo.insert((x, y, dir), (x_old, y_old, next_dir(dir)));
-            return Some((x_old, y_old, next_dir(dir)))
+            return Some((x_old, y_old, next_dir(dir)));
         } else if (x_new, y_new) == temp_block_pos {
-            return Some((x_old, y_old, next_dir(dir)))
+            return Some((x_old, y_old, next_dir(dir)));
         } else {
             (x_old, y_old) = (x_new, y_new)
         }
     }
-    
 }
 
 /// This will be a bottleneck for the performance of part 2 as it will be called for each square we do not encounter an already existing obstacle
@@ -153,7 +181,7 @@ fn obstacle_placement_leads_to_loop(
     mut y: usize,
     temp_block_pos: (usize, usize),
     mut dir: Direction,
-    memo: &mut HashMap<(usize, usize, Direction), (usize, usize, Direction)>
+    memo: &mut HashMap<(usize, usize, Direction), (usize, usize, Direction)>,
 ) -> bool {
     let mut visitied_squares: HashSet<(usize, usize, Direction)> = HashSet::new();
     visitied_squares.insert((x, y, dir));
