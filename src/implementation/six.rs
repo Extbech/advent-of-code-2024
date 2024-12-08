@@ -47,6 +47,7 @@ impl Solution for DaySixSolution {
         let mut memo = HashMap::new();
         let (mut x, mut y, mut dir) = find_guard_pos(&self.data);
         visited_squares.insert((x, y));
+        let mut visited_buf = HashSet::new();
         while let Some((x_next, y_next)) =
             free_step(x, y, self.data[0].len() - 1, self.data.len() - 1, dir)
         {
@@ -59,6 +60,7 @@ impl Solution for DaySixSolution {
                         (x_next, y_next),
                         next_dir(dir),
                         &mut memo,
+                        &mut visited_buf,
                     )
                 {
                     valid_squares.insert((x_next, y_next));
@@ -149,21 +151,25 @@ fn mov_till_turn(
     y: usize,
     dir: Direction,
     temp_block_pos: (usize, usize),
-    memo: &mut HashMap<(usize, usize, Direction), (usize, usize, Direction)>,
+    memo: &mut HashMap<(usize, usize, Direction), (usize, usize)>,
 ) -> Option<(usize, usize, Direction)> {
     if is_at_bounds(x, y, grid[0].len() - 1, grid.len() - 1) {
         return None;
     }
-    if let Some(&(x_new, y_new, dir_new)) = memo.get(&(x, y, dir)) {
+    if let Some(&(x_new, y_new)) = memo.get(&(x, y, dir)) {
         if !in_square((x, y), (x_new, y_new), temp_block_pos) {
-            return Some((x_new, y_new, dir_new));
+            return Some((x_new, y_new, next_dir(dir)));
         }
     }
     let (mut x_old, mut y_old) = (x, y);
     loop {
-        let (x_new, y_new) = free_step(x_old, y_old, grid[0].len() - 1, grid.len() - 1, dir)?;
+        let Some((x_new, y_new)) = free_step(x_old, y_old, grid[0].len() - 1, grid.len() - 1, dir)
+        else {
+            memo.insert((x, y, dir), (x_old, y_old));
+            return None;
+        };
         if grid[y_new][x_new] == OBSTACLE {
-            memo.insert((x, y, dir), (x_old, y_old, next_dir(dir)));
+            memo.insert((x, y, dir), (x_old, y_old));
             return Some((x_old, y_old, next_dir(dir)));
         } else if (x_new, y_new) == temp_block_pos {
             return Some((x_old, y_old, next_dir(dir)));
@@ -181,17 +187,18 @@ fn obstacle_placement_leads_to_loop(
     mut y: usize,
     temp_block_pos: (usize, usize),
     mut dir: Direction,
-    memo: &mut HashMap<(usize, usize, Direction), (usize, usize, Direction)>,
+    memo: &mut HashMap<(usize, usize, Direction), (usize, usize)>,
+    visited_buf: &mut HashSet<(usize, usize, Direction)>,
 ) -> bool {
-    let mut visitied_squares: HashSet<(usize, usize, Direction)> = HashSet::new();
-    visitied_squares.insert((x, y, dir));
+    visited_buf.clear();
+    visited_buf.insert((x, y, dir));
 
     while let Some((x1, y1, dir1)) = mov_till_turn(grid, x, y, dir, temp_block_pos, memo) {
         (x, y, dir) = (x1, y1, dir1);
-        if visitied_squares.contains(&(x, y, dir)) {
+        if visited_buf.contains(&(x, y, dir)) {
             return true;
         }
-        visitied_squares.insert((x, y, dir));
+        visited_buf.insert((x, y, dir));
     }
     false
 }
