@@ -21,7 +21,7 @@ impl Solution for DayNineSolution {
         let mut my_vec: Vec<String> = Vec::new();
         let mut id = 0;
         for (idx, v) in self.data.iter().enumerate() {
-            if idx % 2 != 0 {
+            if idx % 2 == 0 || idx == 0 {
                 my_vec.extend(vec![id.to_string(); *v as usize]);
                 id += 1;
             } else {
@@ -44,7 +44,6 @@ impl Solution for DayNineSolution {
                 a += 1;
             }
             if my_vec[a..my_vec.len()].iter().all(|s| s == ".") {
-                println!("{:?}", my_vec[0..a].iter().collect::<Vec<&String>>());
                 break;
             }
         }
@@ -57,5 +56,26 @@ impl Solution for DayNineSolution {
 
     fn part_two(&self) -> u64 {
         42
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use super::*;
+    fn get_day_nine() -> DayNineSolution {
+        DayNineSolution {
+            data: "2333133121414131402"
+                .to_string()
+                .chars()
+                .map(|c| c.to_digit(10).unwrap())
+                .collect::<Vec<u32>>(),
+        }
+    }
+    #[test]
+    fn test_part_one() {
+        let day_nine = get_day_nine();
+        let output = day_nine.part_one();
+        assert_eq!(output, 1928);
     }
 }
