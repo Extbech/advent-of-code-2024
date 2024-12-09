@@ -18,6 +18,10 @@ impl Solution for DayNineSolution {
     }
 
     fn part_one(&self) -> u64 {
+        42
+    }
+
+    fn part_two(&self) -> u64 {
         let mut my_vec: Vec<String> = Vec::new();
         let mut id = 0;
         for (idx, v) in self.data.iter().enumerate() {
@@ -52,10 +56,6 @@ impl Solution for DayNineSolution {
             .enumerate()
             .map(|(i, s)| i as u64 * s.parse::<u64>().unwrap())
             .sum()
-    }
-
-    fn part_two(&self) -> u64 {
-        42
     }
 }
 
