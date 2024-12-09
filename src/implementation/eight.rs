@@ -104,10 +104,10 @@ fn mark_antinode2(
     let jl = grid[0].len();
     if grid[i1][j1] == grid[i2][j2] {
         for x in 0.. {
-            let Some(i_an) = (i1 + x*i2).checked_sub(x*i1) else {
+            let Some(i_an) = (i1 + x * i2).checked_sub(x * i1) else {
                 return;
             };
-            let Some(j_an) = (j1 + x*j2).checked_sub(x*j1) else {
+            let Some(j_an) = (j1 + x * j2).checked_sub(x * j1) else {
                 return;
             };
             if i_an < il && j_an < jl {
