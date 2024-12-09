@@ -33,20 +33,37 @@ impl Solution for DayEightSolution {
                 }
             }
         }
-        for row in an_grid
-            .iter()
-            .map(|row| row.iter().map(|&e| e as char).collect::<String>())
-        {
-            println!("{row}");
-        }
         an_grid
             .into_iter()
             .map(|row| row.into_iter().filter(|&e| e == b'#').count())
             .sum()
     }
 
-    fn part_two(&self) -> u32 {
-        32
+    fn part_two(&self) -> usize {
+        let mut grid = self.grid.clone();
+        let il = grid.len();
+        let jl = grid[0].len();
+        let mut an_grid = vec![vec![b'.'; jl]; il];
+        for i in 0..il {
+            for j in 0..jl {
+                if [b'.', b'#'].contains(&grid[i][j]) {
+                    continue;
+                }
+                for i2 in 0..il {
+                    for j2 in 0..jl {
+                        if i2 == i && j2 == j {
+                            continue;
+                        }
+                        mark_antinode2(&mut an_grid, &mut grid, i, j, i2, j2);
+                        mark_antinode2(&mut an_grid, &mut grid, i2, j2, i, j);
+                    }
+                }
+            }
+        }
+        an_grid
+            .into_iter()
+            .map(|row| row.into_iter().filter(|&e| e == b'#').count())
+            .sum()
     }
 }
 
@@ -70,6 +87,34 @@ fn mark_antinode(
         };
         if i_an < il && j_an < jl {
             an_grid[i_an][j_an] = b'#'
+        }
+    }
+}
+
+// Marks the antinode where (i2, j2) is between (i1, j1) and the antinode for part 2
+fn mark_antinode2(
+    an_grid: &mut [Vec<u8>],
+    grid: &mut [Vec<u8>],
+    i1: usize,
+    j1: usize,
+    i2: usize,
+    j2: usize,
+) {
+    let il = grid.len();
+    let jl = grid[0].len();
+    if grid[i1][j1] == grid[i2][j2] {
+        for x in 0.. {
+            let Some(i_an) = (i1 + x*i2).checked_sub(x*i1) else {
+                return;
+            };
+            let Some(j_an) = (j1 + x*j2).checked_sub(x*j1) else {
+                return;
+            };
+            if i_an < il && j_an < jl {
+                an_grid[i_an][j_an] = b'#'
+            } else {
+                return;
+            }
         }
     }
 }
