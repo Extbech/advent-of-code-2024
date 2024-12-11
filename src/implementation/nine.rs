@@ -65,47 +65,39 @@ impl Solution for DayNineSolution {
                 my_vec.extend(vec![".".to_string(); *v as usize])
             }
         }
-
-        let mut a = 0;
-        while a < my_vec.len() - 1 {
-            if my_vec[a] == "." {
-                let a_range = my_vec[a..my_vec.len()].iter().position(|a| a != ".").unwrap_or(0);
-                if a_range == 0 {
-                    for i in 0..my_vec.len() {
-                        if my_vec[my_vec.len() - 1 - i] != "." {
-                            my_vec.swap(a, i);
-                        }
-                }
-                a += 1;
-            } else {
-                let mut b = my_vec.len() - 1;
+        let mut b = my_vec.len() - 1;
+        while b > 0 {
+            if my_vec[0..b].iter().all(|s| s != ".") {
+                break;
+            }
+            if my_vec[b] != "." {
+                let b_range = (0..b).position(|i| my_vec[b] != my_vec[b - i]).unwrap_or(0);
+                let mut a = 0;
                 'inner: loop {
-                    if b <= a {
-                        a += a_range;
+                    if a >= b {
+                        b -= b_range;
                         break 'inner;
                     }
-                    if my_vec[b] != "." {
-                        let b_range = (0..b).position(|i| my_vec[b] != my_vec[b - i]).unwrap_or(0);
-                        if b_range <= a_range {
-                            for i in 0..((b_range) + 1) {
+                    if my_vec[a] == "." {
+                        let a_range = (a..b).position(|x| my_vec[x] != ".").unwrap_or(0);
+                        if a_range >= b_range {
+                            for i in 0..b_range {
                                 my_vec.swap(a + i, b - i);
                             }
-                            a += (b_range) + 1;
-                            println!("{:?}", a);
+                            b -= b_range;
                             break 'inner;
+
                         } else {
-                            b -= b_range + 1;
+                            a += a_range;
                         }
-                    } else {
-                        b -= 1;
                     }
-                }
+                    a += 1;
                 }
             } else {
-                a += 1;
+                b -= 1;
             }
+
         }
-        println!("{:?}", my_vec);
         my_vec
             .iter()
             .enumerate()
