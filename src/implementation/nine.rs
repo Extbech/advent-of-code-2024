@@ -86,7 +86,6 @@ impl Solution for DayNineSolution {
                             }
                             b -= b_range;
                             break 'inner;
-
                         } else {
                             a += a_range;
                         }
@@ -96,7 +95,6 @@ impl Solution for DayNineSolution {
             } else {
                 b -= 1;
             }
-
         }
         my_vec
             .iter()

@@ -1,6 +1,8 @@
 use advent_of_code_2024::{
     implementation::{
-        eight::DayEightSolution, five::DayFiveSolution, four::DayFourSolution, nine::DayNineSolution, one::DayOneSolution, seven::DaySevenSolution, six::DaySixSolution, three::DayThreeSolution, two::DayTwoSolution
+        eight::DayEightSolution, five::DayFiveSolution, four::DayFourSolution,
+        nine::DayNineSolution, one::DayOneSolution, seven::DaySevenSolution, six::DaySixSolution,
+        three::DayThreeSolution, two::DayTwoSolution,
     },
     Solution,
 };
