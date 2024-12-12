@@ -59,7 +59,7 @@ fn apply_rule_recursion(stone: u64, iter: u8, map: &mut HashMap<(u64, u8), u64>)
             apply_rule_recursion(p1.parse().unwrap(), iter - 1, map)
                 + apply_rule_recursion(p2.parse().unwrap(), iter - 1, map)
         }
-        _ => apply_rule_recursion(stone * 2024 as u64, iter - 1, map),
+        _ => apply_rule_recursion(stone * 2024_u64, iter - 1, map),
     };
     map.insert((stone, iter), res as u64);
 

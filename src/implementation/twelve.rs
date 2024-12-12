@@ -90,10 +90,10 @@ fn iter_grid_recurse(
         (area, perimeter) = iter_grid_recurse(grid, (cords.0, cords.1 + 1), area, perimeter, vec);
     }
 
-    return (area, perimeter);
+    (area, perimeter)
 }
 
-fn get_perimeter(grid: &Vec<Vec<u8>>, cords: (usize, usize)) -> u64 {
+fn get_perimeter(grid: &[Vec<u8>], cords: (usize, usize)) -> u64 {
     let mut perimeter = 0;
     let x = cords.0;
     let y = cords.1;
@@ -113,7 +113,7 @@ fn get_perimeter(grid: &Vec<Vec<u8>>, cords: (usize, usize)) -> u64 {
 }
 
 fn get_perimeter_2(
-    grid: &Vec<Vec<u8>>,
+    grid: &[Vec<u8>],
     cords: (usize, usize),
     perimeter_set: &mut HashSet<(usize, usize, Direction)>,
 ) -> u64 {
@@ -291,7 +291,7 @@ fn iter_grid_recurse_2(
         );
     }
 
-    return (area, perimeter);
+    (area, perimeter)
 }
 #[cfg(test)]
 
