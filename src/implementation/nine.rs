@@ -54,23 +54,23 @@ impl Solution for DayNineSolution {
             .sum()
     }
 
-    fn part_two(&self) -> u64 {
-        let mut my_vec: Vec<String> = Vec::new();
+    fn part_two(&self) -> i64 {
+        let mut my_vec: Vec<i64> = Vec::new();
         let mut id = 0;
         for (idx, v) in self.data.iter().enumerate() {
             if idx % 2 == 0 || idx == 0 {
-                my_vec.extend(vec![id.to_string(); *v as usize]);
+                my_vec.extend(vec![id; *v as usize]);
                 id += 1;
             } else {
-                my_vec.extend(vec![".".to_string(); *v as usize])
+                my_vec.extend(vec![-1; *v as usize])
             }
         }
         let mut b = my_vec.len() - 1;
         while b > 0 {
-            if my_vec[0..b].iter().all(|s| s != ".") {
+            if my_vec[0..b].iter().all(|s| *s != -1) {
                 break;
             }
-            if my_vec[b] != "." {
+            if my_vec[b] != -1 {
                 let b_range = (0..b).position(|i| my_vec[b] != my_vec[b - i]).unwrap_or(0);
                 let mut a = 0;
                 'inner: loop {
@@ -78,8 +78,8 @@ impl Solution for DayNineSolution {
                         b -= b_range;
                         break 'inner;
                     }
-                    if my_vec[a] == "." {
-                        let a_range = (a..b).position(|x| my_vec[x] != ".").unwrap_or(0);
+                    if my_vec[a] == -1 {
+                        let a_range = (a..b).position(|x| my_vec[x] != -1).unwrap_or(0);
                         if a_range >= b_range {
                             for i in 0..b_range {
                                 my_vec.swap(a + i, b - i);
@@ -99,7 +99,7 @@ impl Solution for DayNineSolution {
         my_vec
             .iter()
             .enumerate()
-            .map(|(i, s)| i as u64 * s.parse::<u64>().unwrap_or(0))
+            .map(|(i, s)| if *s == -1 { 0 } else { *s * i as i64 })
             .sum()
     }
 }
