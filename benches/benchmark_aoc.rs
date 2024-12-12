@@ -1,8 +1,6 @@
 use advent_of_code_2024::{
     implementation::{
-        eight::DayEightSolution, five::DayFiveSolution, four::DayFourSolution,
-        nine::DayNineSolution, one::DayOneSolution, seven::DaySevenSolution, six::DaySixSolution,
-        three::DayThreeSolution, two::DayTwoSolution,
+        eight::DayEightSolution, eleven::DayElevenSolution, five::DayFiveSolution, four::DayFourSolution, nine::DayNineSolution, one::DayOneSolution, seven::DaySevenSolution, six::DaySixSolution, ten::DayTenSolution, three::DayThreeSolution, two::DayTwoSolution
     },
     Solution,
 };
@@ -90,6 +88,24 @@ fn benchmark_aoc_day_nine(c: &mut Criterion) {
     group.finish();
 }
 
+fn benchmark_aoc_day_ten(c: &mut Criterion) {
+    let day_ten = DayTenSolution::new();
+    let mut group = c.benchmark_group("AOC day 10");
+
+    group.bench_function("Solution one", |b| b.iter(|| day_ten.part_one()));
+    group.bench_function("Solution two", |b| b.iter(|| day_ten.part_two()));
+    group.finish();
+}
+
+fn benchmark_aoc_day_eleven(c: &mut Criterion) {
+    let day_eleven = DayElevenSolution::new();
+    let mut group = c.benchmark_group("AOC day 11");
+
+    group.bench_function("Solution one", |b| b.iter(|| day_eleven.part_one()));
+    group.bench_function("Solution two", |b| b.iter(|| day_eleven.part_two()));
+    group.finish();
+}
+
 criterion_group!(
     benches,
     benchmark_aoc_day_one,
@@ -100,6 +116,8 @@ criterion_group!(
     benchmark_aoc_day_six,
     benchmark_aoc_day_seven,
     benchmark_aoc_day_eight,
-    benchmark_aoc_day_nine
+    benchmark_aoc_day_nine,
+    benchmark_aoc_day_ten,
+    benchmark_aoc_day_eleven
 );
 criterion_main!(benches);
