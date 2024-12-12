@@ -10,7 +10,9 @@ impl Solution for DayTwelveSolution {
     const DAY: u8 = 12;
 
     fn new() -> Self {
-        DayTwelveSolution { grid: parse_input(Self::read_data_to_vec().unwrap()) }
+        DayTwelveSolution {
+            grid: parse_input(Self::read_data_to_vec().unwrap()),
+        }
     }
 
     fn part_one(&self) -> u64 {
@@ -22,7 +24,7 @@ impl Solution for DayTwelveSolution {
                     let (area, perimeter) = iter_grid_recurse(&self.grid, (x, y), 0, 0, &mut set);
                     sum += area * perimeter;
                 }
-            } 
+            }
         }
         sum
     }
@@ -33,8 +35,9 @@ impl Solution for DayTwelveSolution {
         for y in 0..self.grid.len() {
             for x in 0..self.grid[y].len() {
                 if !set.contains(&(x, y)) {
-                    let (area, perimeter) = iter_grid_recurse_2(&self.grid, (x, y), 0, 0, &mut set, None,Direction::Right);
-                    println!("Char: {} Area: {}, Perimeter: {}",self.grid[y][x] as char, area, perimeter);
+                    let mut perimeter_set: HashSet<(usize, usize, Direction)> = HashSet::new();
+                    let (area, perimeter) =
+                        iter_grid_recurse_2(&self.grid, (x, y), 0, 0, &mut set, &mut perimeter_set);
                     sum += area * perimeter;
                 }
             }
@@ -47,25 +50,42 @@ fn parse_input(input: Vec<String>) -> Vec<Vec<u8>> {
     input.iter().map(|x| x.as_bytes().to_vec()).collect()
 }
 
-fn iter_grid_recurse(grid: &Vec<Vec<u8>>, cords: (usize, usize), mut area: u64, mut perimeter: u64, set: &mut HashSet<(usize, usize)>) -> (u64, u64) {
-    // Break condition, no
+fn iter_grid_recurse(
+    grid: &Vec<Vec<u8>>,
+    cords: (usize, usize),
+    mut area: u64,
+    mut perimeter: u64,
+    set: &mut HashSet<(usize, usize)>,
+) -> (u64, u64) {
     set.insert(cords);
     area += 1;
     perimeter += get_perimeter(grid, cords);
     // check if we can recurse go left
-    if cords.0 > 0 && grid[cords.1][cords.0 - 1] == grid[cords.1][cords.0] && !set.contains(&(cords.0 - 1, cords.1)) {
+    if cords.0 > 0
+        && grid[cords.1][cords.0 - 1] == grid[cords.1][cords.0]
+        && !set.contains(&(cords.0 - 1, cords.1))
+    {
         (area, perimeter) = iter_grid_recurse(grid, (cords.0 - 1, cords.1), area, perimeter, set);
     }
     // check if we can recurse go right
-    if cords.0 < grid[cords.1].len() - 1 && grid[cords.1][cords.0 + 1] == grid[cords.1][cords.0] && !set.contains(&(cords.0 + 1, cords.1)) {
+    if cords.0 < grid[cords.1].len() - 1
+        && grid[cords.1][cords.0 + 1] == grid[cords.1][cords.0]
+        && !set.contains(&(cords.0 + 1, cords.1))
+    {
         (area, perimeter) = iter_grid_recurse(grid, (cords.0 + 1, cords.1), area, perimeter, set);
     }
     // check if we can recurse go up
-    if cords.1 > 0 && grid[cords.1 - 1][cords.0] == grid[cords.1][cords.0] && !set.contains(&(cords.0, cords.1 - 1)) {
+    if cords.1 > 0
+        && grid[cords.1 - 1][cords.0] == grid[cords.1][cords.0]
+        && !set.contains(&(cords.0, cords.1 - 1))
+    {
         (area, perimeter) = iter_grid_recurse(grid, (cords.0, cords.1 - 1), area, perimeter, set);
     }
     // check if we can recurse go down
-    if cords.1 < grid.len() - 1 && grid[cords.1 + 1][cords.0] == grid[cords.1][cords.0] && !set.contains(&(cords.0, cords.1 + 1)) {
+    if cords.1 < grid.len() - 1
+        && grid[cords.1 + 1][cords.0] == grid[cords.1][cords.0]
+        && !set.contains(&(cords.0, cords.1 + 1))
+    {
         (area, perimeter) = iter_grid_recurse(grid, (cords.0, cords.1 + 1), area, perimeter, set);
     }
 
@@ -91,7 +111,110 @@ fn get_perimeter(grid: &Vec<Vec<u8>>, cords: (usize, usize)) -> u64 {
     perimeter
 }
 
-#[derive(PartialEq, Clone, Copy)]
+fn get_perimeter_2(
+    grid: &Vec<Vec<u8>>,
+    cords: (usize, usize),
+    perimeter_set: &mut HashSet<(usize, usize, Direction)>,
+) -> u64 {
+    let mut perimeter = 0;
+    let x = cords.0;
+    let y = cords.1;
+    let id = grid[y][x];
+    // LEFT
+    if (x == 0 || grid[y][x - 1] != id) && !perimeter_set.contains(&(x, y, Direction::Left)) {
+        perimeter += 1;
+        for i in 1.. {
+            if y + i <= grid.len() - 1
+                && grid[y + i][x] == id
+                && (x == 0 || grid[y + i][x - 1] != id)
+            {
+                perimeter_set.insert((x, y + i, Direction::Left));
+            } else {
+                break;
+            }
+        }
+        for i in 1.. {
+            if y >= i && grid[y - i][x] == id && (x == 0 || grid[y - i][x - 1] != id) {
+                perimeter_set.insert((x, y - i, Direction::Left));
+            } else {
+                break;
+            }
+        }
+    }
+    // RIGHT
+    if (x == grid[y].len() - 1 || grid[y][x + 1] != id)
+        && !perimeter_set.contains(&(x, y, Direction::Right))
+    {
+        perimeter += 1;
+        for i in 1.. {
+            if y + i <= grid.len() - 1
+                && grid[y + i][x] == id
+                && (x == grid[y].len() - 1 || grid[y + i][x + 1] != id)
+            {
+                perimeter_set.insert((x, y + i, Direction::Right));
+            } else {
+                break;
+            }
+        }
+        for i in 1.. {
+            if y >= i
+                && grid[y - i][x] == id
+                && (x == grid[y].len() - 1 || grid[y - i][x + 1] != id)
+            {
+                perimeter_set.insert((x, y - i, Direction::Right));
+            } else {
+                break;
+            }
+        }
+    }
+    // UP
+    if (y == 0 || grid[y - 1][x] != id) && !perimeter_set.contains(&(x, y, Direction::Up)) {
+        perimeter += 1;
+        for i in 1.. {
+            if x >= i && grid[y][x - i] == id && (y == 0 || grid[y - 1][x - i] != id) {
+                perimeter_set.insert((x - i, y, Direction::Up));
+            } else {
+                break;
+            }
+        }
+        for i in 1.. {
+            if x + i <= grid[y].len() - 1
+                && grid[y][x + i] == id
+                && (y == 0 || grid[y - 1][x + i] != id)
+            {
+                perimeter_set.insert((x + i, y, Direction::Up));
+            } else {
+                break;
+            }
+        }
+    }
+    // DOWN
+    if (y == grid.len() - 1 || grid[y + 1][x] != id)
+        && !perimeter_set.contains(&(x, y, Direction::Down))
+    {
+        perimeter += 1;
+        for i in 1.. {
+            if x >= i && grid[y][x - i] == id && (y == grid.len() - 1 || grid[y + 1][x - i] != id) {
+                perimeter_set.insert((x - i, y, Direction::Down));
+            } else {
+                break;
+            }
+        }
+        for i in 1.. {
+            if x + i <= grid[y].len() - 1
+                && grid[y][x + i] == id
+                && (y == grid.len() - 1 || grid[y + 1][x + i] != id)
+            {
+                perimeter_set.insert((x + i, y, Direction::Down));
+            } else {
+                break;
+            }
+        }
+    }
+    perimeter
+}
+
+#[derive(PartialEq, Clone, Copy, Hash, Eq)]
 enum Direction {
     Left,
     Right,
@@ -99,32 +222,72 @@ enum Direction {
     Down,
 }
 
-fn iter_grid_recurse_2(grid: &Vec<Vec<u8>>, cords: (usize, usize), mut area: u64, mut perimeter: u64, set: &mut HashSet<(usize, usize)>, prev_dir: Option<Direction>, dir: Direction) -> (u64, u64) {
-    // Break condition, no
+fn iter_grid_recurse_2(
+    grid: &Vec<Vec<u8>>,
+    cords: (usize, usize),
+    mut area: u64,
+    mut perimeter: u64,
+    set: &mut HashSet<(usize, usize)>,
+    perimeter_set: &mut HashSet<(usize, usize, Direction)>,
+) -> (u64, u64) {
     set.insert(cords);
     area += 1;
-    if prev_dir.is_some(){
-        if prev_dir.unwrap() != dir {
-            perimeter += get_perimeter(grid, cords);
-        }
-    } else {
-        perimeter += get_perimeter(grid, cords);
-    }
+    perimeter += get_perimeter_2(grid, cords, perimeter_set);
     // check if we can recurse go left
-    if cords.0 > 0 && grid[cords.1][cords.0 - 1] == grid[cords.1][cords.0] && !set.contains(&(cords.0 - 1, cords.1)) {
-        (area, perimeter) = iter_grid_recurse_2(grid, (cords.0 - 1, cords.1), area, perimeter, set, Some(dir),Direction::Left);
+    if cords.0 > 0
+        && grid[cords.1][cords.0 - 1] == grid[cords.1][cords.0]
+        && !set.contains(&(cords.0 - 1, cords.1))
+    {
+        (area, perimeter) = iter_grid_recurse_2(
+            grid,
+            (cords.0 - 1, cords.1),
+            area,
+            perimeter,
+            set,
+            perimeter_set,
+        );
     }
     // check if we can recurse go right
-    if cords.0 < grid[cords.1].len() - 1 && grid[cords.1][cords.0 + 1] == grid[cords.1][cords.0] && !set.contains(&(cords.0 + 1, cords.1)) {
-        (area, perimeter) = iter_grid_recurse_2(grid, (cords.0 + 1, cords.1), area, perimeter, set, Some(dir),Direction::Right);
+    if cords.0 < grid[cords.1].len() - 1
+        && grid[cords.1][cords.0 + 1] == grid[cords.1][cords.0]
+        && !set.contains(&(cords.0 + 1, cords.1))
+    {
+        (area, perimeter) = iter_grid_recurse_2(
+            grid,
+            (cords.0 + 1, cords.1),
+            area,
+            perimeter,
+            set,
+            perimeter_set,
+        );
     }
     // check if we can recurse go up
-    if cords.1 > 0 && grid[cords.1 - 1][cords.0] == grid[cords.1][cords.0] && !set.contains(&(cords.0, cords.1 - 1)) {
-        (area, perimeter) = iter_grid_recurse_2(grid, (cords.0, cords.1 - 1), area, perimeter, set, Some(dir),Direction::Up);
+    if cords.1 > 0
+        && grid[cords.1 - 1][cords.0] == grid[cords.1][cords.0]
+        && !set.contains(&(cords.0, cords.1 - 1))
+    {
+        (area, perimeter) = iter_grid_recurse_2(
+            grid,
+            (cords.0, cords.1 - 1),
+            area,
+            perimeter,
+            set,
+            perimeter_set,
+        );
     }
     // check if we can recurse go down
-    if cords.1 < grid.len() - 1 && grid[cords.1 + 1][cords.0] == grid[cords.1][cords.0] && !set.contains(&(cords.0, cords.1 + 1)) {
-        (area, perimeter) = iter_grid_recurse_2(grid, (cords.0, cords.1 + 1), area, perimeter, set, Some(dir),Direction::Down);
+    if cords.1 < grid.len() - 1
+        && grid[cords.1 + 1][cords.0] == grid[cords.1][cords.0]
+        && !set.contains(&(cords.0, cords.1 + 1))
+    {
+        (area, perimeter) = iter_grid_recurse_2(
+            grid,
+            (cords.0, cords.1 + 1),
+            area,
+            perimeter,
+            set,
+            perimeter_set,
+        );
     }
 
     return (area, perimeter);
@@ -135,7 +298,7 @@ mod tests {
     use super::*;
 
     fn get_day_twelve() -> DayTwelveSolution {
-        DayTwelveSolution { 
+        DayTwelveSolution {
             grid: parse_input(vec![
                 "RRRRIICCFF".to_string(),
                 "RRRRIICCCF".to_string(),
@@ -146,8 +309,8 @@ mod tests {
                 "VVIIICJJEE".to_string(),
                 "MIIIIIJJEE".to_string(),
                 "MIIISIJEEE".to_string(),
-                "MMMISSJEEE".to_string()
-                ])
+                "MMMISSJEEE".to_string(),
+            ]),
         }
     }
     #[test]
