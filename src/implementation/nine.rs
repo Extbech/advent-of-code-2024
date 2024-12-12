@@ -17,23 +17,23 @@ impl Solution for DayNineSolution {
         }
     }
 
-    fn part_one(&self) -> u64 {
-        let mut my_vec: Vec<String> = Vec::new();
+    fn part_one(&self) -> usize {
+        let mut my_vec: Vec<i32> = Vec::new();
         let mut id = 0;
         for (idx, v) in self.data.iter().enumerate() {
             if idx % 2 == 0 || idx == 0 {
-                my_vec.extend(vec![id.to_string(); *v as usize]);
+                my_vec.extend(vec![id; *v as usize]);
                 id += 1;
             } else {
-                my_vec.extend(vec![".".to_string(); *v as usize])
+                my_vec.extend(vec![-1; *v as usize])
             }
         }
 
         let mut a = 0;
         let mut b = my_vec.len() - 1;
         loop {
-            if my_vec[a] == "." {
-                if my_vec[b] != "." {
+            if my_vec[a] == -1 {
+                if my_vec[b] != -1 {
                     my_vec.swap(a, b);
                     a += 1;
                     b -= 1;
@@ -43,14 +43,14 @@ impl Solution for DayNineSolution {
             } else {
                 a += 1;
             }
-            if my_vec[a..my_vec.len()].iter().all(|s| s == ".") {
+            if my_vec[a..my_vec.len()].iter().all(|s| *s == -1) {
                 break;
             }
         }
         my_vec[0..a]
             .iter()
             .enumerate()
-            .map(|(i, s)| i as u64 * s.parse::<u64>().unwrap())
+            .map(|(i, s)| i * *s as usize)
             .sum()
     }
 
