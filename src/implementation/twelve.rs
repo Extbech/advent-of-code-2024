@@ -51,6 +51,7 @@ fn parse_input(input: Vec<String>) -> Vec<Vec<u8>> {
     input.iter().map(|x| x.as_bytes().to_vec()).collect()
 }
 
+// Very good func
 fn iter_grid_recurse(
     grid: &Vec<Vec<u8>>,
     cords: (usize, usize),
