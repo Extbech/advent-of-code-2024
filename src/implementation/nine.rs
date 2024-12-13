@@ -17,41 +17,50 @@ impl Solution for DayNineSolution {
         }
     }
 
-    fn part_one(&self) -> usize {
-        let mut my_vec: Vec<i32> = Vec::new();
-        let mut id = 0;
-        for (idx, v) in self.data.iter().enumerate() {
-            if idx % 2 == 0 || idx == 0 {
-                my_vec.extend(vec![id; *v as usize]);
-                id += 1;
-            } else {
-                my_vec.extend(vec![-1; *v as usize])
-            }
-        }
-
-        let mut a = 0;
-        let mut b = my_vec.len() - 1;
-        loop {
-            if my_vec[a] == -1 {
-                if my_vec[b] != -1 {
-                    my_vec.swap(a, b);
-                    a += 1;
-                    b -= 1;
-                } else {
-                    b -= 1;
+    fn part_one(&self) -> u64 {
+        let mut i = 0;
+        let mut j = self.data.len() - 1;
+        let mut left_id = 0;
+        let mut right_id = self.data.len() / 2;
+        let mut left_len = self.data[i];
+        let mut right_len = self.data[j];
+        let mut empty = false;
+        let mut sum = 0u64;
+        for k in 0.. {
+            while left_len == 0 && i < j {
+                i += 1;
+                empty ^= true;
+                if i < j {
+                    left_len = self.data[i];
                 }
-            } else {
-                a += 1;
+                if !empty {
+                    left_id += 1;
+                }
             }
-            if my_vec[a..my_vec.len()].iter().all(|s| *s == -1) {
+            while right_len == 0 && i < j {
+                j -= 2;
+                if i < j {
+                    right_len = self.data[j];
+                }
+                right_id -= 1;
+            }
+            if j <= i {
+                let len = (right_len + if !empty { left_len } else { 0 }) as usize;
+                for m in k..(k + len) {
+                    sum += (m * left_id) as u64
+                }
                 break;
             }
+            if empty {
+                right_len -= 1;
+                left_len -= 1;
+                sum += (k * right_id) as u64;
+            } else {
+                left_len -= 1;
+                sum += (k * left_id) as u64;
+            }
         }
-        my_vec[0..a]
-            .iter()
-            .enumerate()
-            .map(|(i, s)| i * *s as usize)
-            .sum()
+        sum
     }
 
     fn part_two(&self) -> i64 {
@@ -103,6 +112,36 @@ impl Solution for DayNineSolution {
             .sum()
     }
 }
+
+/* 0099811188827773336446555566
+0  0*0
+0  0*1
+18 9*2
+45 18 + 9*3
+77 45 + 8*4
+82 77 + 1*5
+88 82 + 1*6
+95 88 + 1*7
+159 95 + 8*8
+231 159 + 8*9
+311 231 + 8*10
+333 311 + 2*11
+417 333 + 7*12
+508 417 + 7*13
+606 508 + 7*14
+651 606 + 3*15
+699 651 + 3*16
+750 699 + 3*17
+858 750 + 6*18
+934 858 + 4*19
+1014 934 + 4*20
+1140 1014 + 6*21
+1250 1140 + 5*22
+1365 1250 + 5*23
+1485 1365 + 5*24
+1610 1485 + 5*25
+1766 1610 + 6*26
+*/
 
 #[cfg(test)]
 mod tests {
