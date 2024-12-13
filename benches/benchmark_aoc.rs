@@ -2,8 +2,8 @@ use advent_of_code_2024::{
     implementation::{
         eight::DayEightSolution, eleven::DayElevenSolution, five::DayFiveSolution,
         four::DayFourSolution, nine::DayNineSolution, one::DayOneSolution, seven::DaySevenSolution,
-        six::DaySixSolution, ten::DayTenSolution, three::DayThreeSolution,
-        twelve::DayTwelveSolution, two::DayTwoSolution,
+        six::DaySixSolution, ten::DayTenSolution, thirteen::DayThirteenSolution,
+        three::DayThreeSolution, twelve::DayTwelveSolution, two::DayTwoSolution,
     },
     Solution,
 };
@@ -118,6 +118,15 @@ fn benchmark_aoc_day_twelve(c: &mut Criterion) {
     group.finish();
 }
 
+fn benchmark_aoc_day_thirteen(c: &mut Criterion) {
+    let day_thirteen = DayThirteenSolution::new();
+    let mut group = c.benchmark_group("AOC day 13");
+
+    group.bench_function("Solution one", |b| b.iter(|| day_thirteen.part_one()));
+    //group.bench_function("Solution two", |b| b.iter(|| day_thirteen.part_two()));
+    group.finish();
+}
+
 criterion_group!(
     benches,
     benchmark_aoc_day_one,
@@ -131,6 +140,7 @@ criterion_group!(
     benchmark_aoc_day_nine,
     benchmark_aoc_day_ten,
     benchmark_aoc_day_eleven,
-    benchmark_aoc_day_twelve
+    benchmark_aoc_day_twelve,
+    benchmark_aoc_day_thirteen
 );
 criterion_main!(benches);
