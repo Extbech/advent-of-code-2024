@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 use crate::Solution;
 
@@ -17,10 +17,11 @@ impl Solution for DayTenSolution {
 
     fn part_one(&self) -> u32 {
         let mut sum = 0;
+        let mut buf = Vec::new();
         for (y, row) in self.map.iter().enumerate() {
             for (x, num) in row.iter().enumerate() {
                 if *num == 0 {
-                    sum += find_num_trails(&self.map, (x, y));
+                    sum += find_num_trails(&self.map, (x, y), &mut buf);
                 }
             }
         }
@@ -51,9 +52,9 @@ fn parse_input(input: &[String]) -> Vec<Vec<u8>> {
         .collect()
 }
 
-fn find_num_trails(map: &[Vec<u8>], cords: (usize, usize)) -> u32 {
-    let mut sum: HashSet<(usize, usize)> = HashSet::new();
-    find_next_step(map, cords, 0, &mut sum);
+fn find_num_trails(map: &[Vec<u8>], cords: (usize, usize), sum: &mut Vec<(usize, usize)>) -> u32 {
+    sum.clear();
+    find_next_step(map, cords, 0, sum);
     sum.len() as u32
 }
 
@@ -67,10 +68,10 @@ fn find_next_step(
     map: &[Vec<u8>],
     cords: (usize, usize),
     num: u8,
-    accumulator: &mut HashSet<(usize, usize)>,
+    accumulator: &mut Vec<(usize, usize)>,
 ) {
-    if num == 9 {
-        accumulator.insert(cords);
+    if num == 9 && !accumulator.contains(&cords) {
+        accumulator.push(cords);
         return;
     }
     // Move left
