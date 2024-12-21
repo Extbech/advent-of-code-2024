@@ -1,3 +1,5 @@
+use std::cmp::min;
+
 use crate::Solution;
 
 pub struct DayNineSolution {
@@ -26,7 +28,8 @@ impl Solution for DayNineSolution {
         let mut right_len = self.data[j];
         let mut empty = false;
         let mut sum = 0u64;
-        for k in 0.. {
+        let mut k = 0;
+        loop {
             while left_len == 0 && i < j {
                 i += 1;
                 empty ^= true;
@@ -46,18 +49,20 @@ impl Solution for DayNineSolution {
             }
             if j <= i {
                 let len = (right_len + if !empty { left_len } else { 0 }) as usize;
-                for m in k..(k + len) {
-                    sum += (m * left_id) as u64
-                }
+                sum += (left_id * ((k+len)*(k+len-1) - (k-1)*k) / 2) as u64;
                 break;
             }
             if empty {
-                right_len -= 1;
-                left_len -= 1;
-                sum += (k * right_id) as u64;
+                let m = min(right_len, left_len) as usize;
+                right_len -= m as u32;
+                left_len -= m as u32;
+                sum += ((((k+m).wrapping_sub(1))*(k+m) - (k.wrapping_sub(1))*k) / 2 * right_id) as u64;
+                k += m as usize;
             } else {
-                left_len -= 1;
-                sum += (k * left_id) as u64;
+                let m = left_len as usize;
+                left_len = 0;
+                sum += ((((k+m).wrapping_sub(1))*(k+m) - (k.wrapping_sub(1))*k) / 2 * left_id) as u64;
+                k += m;
             }
         }
         sum
