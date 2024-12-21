@@ -70,8 +70,10 @@ fn find_next_step(
     num: u8,
     accumulator: &mut Vec<(usize, usize)>,
 ) {
-    if num == 9 && !accumulator.contains(&cords) {
-        accumulator.push(cords);
+    if num == 9 {
+        if !accumulator.contains(&cords) {
+            accumulator.push(cords);
+        }
         return;
     }
     // Move left
