@@ -1,3 +1,4 @@
+use core::num;
 use std::collections::HashMap;
 
 use crate::Solution;
@@ -50,14 +51,13 @@ fn apply_rule_recursion(stone: u64, iter: u8, map: &mut HashMap<(u64, u8), u64>)
 
     let res = match stone {
         0 => apply_rule_recursion(1, iter - 1, map),
-        x if (x.checked_ilog10().unwrap_or(0) + 1) % 2 == 0 => {
-            let num_str = x.to_string();
+        x if (x.ilog10() + 1) % 2 == 0 => {
+            let num_digits = x.ilog10() + 1;
 
-            let num_digits = x.checked_ilog10().unwrap_or(0) + 1;
-
-            let (p1, p2) = num_str.split_at((num_digits / 2) as usize);
-            apply_rule_recursion(p1.parse().unwrap(), iter - 1, map)
-                + apply_rule_recursion(p2.parse().unwrap(), iter - 1, map)
+            let p1 = x % 10u64.pow(num_digits/2);
+            let p2 = x / 10u64.pow(num_digits/2);
+            apply_rule_recursion(p1, iter - 1, map)
+                + apply_rule_recursion(p2, iter - 1, map)
         }
         _ => apply_rule_recursion(stone * 2024_u64, iter - 1, map),
     };
